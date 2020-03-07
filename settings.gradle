@@ -1,0 +1,3 @@
+rootProject.name='Time state compile'
+include ':app'
+include ':plugin'
