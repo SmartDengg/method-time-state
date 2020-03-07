@@ -10,7 +10,6 @@ import org.gradle.api.Project
 
 import java.nio.file.Files
 import java.nio.file.Path
-import java.util.Map.Entry
 
 import static com.google.common.base.Preconditions.checkNotNull
 
@@ -50,10 +49,6 @@ class TimeStateTransform extends Transform {
   @Override
   void transform(TransformInvocation invocation)
       throws TransformException, InterruptedException, IOException {
-
-    def map = [key1: 'value 1', key2: 'value2']
-
-    map.each { Entry e -> }
 
     ForkJoinExecutor executor = ForkJoinExecutor.instance
 

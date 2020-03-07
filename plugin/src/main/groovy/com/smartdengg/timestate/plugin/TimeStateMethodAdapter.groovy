@@ -12,7 +12,7 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
 
   private static final UNKNOWN_LINENUMBER = -1
 
-  private static final String timeStateLoggerOwner = "com/lianjia/timestate/runtime/TimeStateLogger"
+  private static final String timeStateLoggerOwner = "com/smartdengg/timestate/runtime/TimeStateLogger"
   private static final String timeStateLoggerEntry = "entry"
   private static final String timeStateLoggerExit = "exit"
   private static final String timeStateLoggerLogName = "log"
@@ -57,9 +57,9 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
 
   @Override /*①*/
   AnnotationVisitor visitAnnotation(String desc, boolean visible) {
-    hasTimeAnnotation |= desc == "Lcom/lianjia/timestate/runtime/TimeState;"
-    hasFullTimeAnnotation |= desc == "Lcom/lianjia/timestate/runtime/FullTimeState;"
-    hasTracedAnnotation |= desc == "Lcom/lianjia/timestate/runtime/TimeTraced;"
+    hasTimeAnnotation |= desc == "Lcom/smartdengg/timestate/runtime/TimeState;"
+    hasFullTimeAnnotation |= desc == "Lcom/smartdengg/timestate/runtime/FullTimeState;"
+    hasTracedAnnotation |= desc == "Lcom/smartdengg/timestate/runtime/TimeTraced;"
     return super.visitAnnotation(desc, visible)
   }
 
@@ -168,7 +168,7 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
   private void addTimedAnno(MethodVisitor mv) {
     if (!isWoven) {
       AnnotationVisitor annotationVisitor =
-          mv.visitAnnotation("Lcom/lianjia/timestate/runtime/TimeTraced;", false)
+          mv.visitAnnotation("Lcom/smartdengg/timestate/runtime/TimeTraced;", false)
       annotationVisitor.visitEnd()
       this.isWoven = true
     }

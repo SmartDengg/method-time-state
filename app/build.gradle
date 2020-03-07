@@ -1,11 +1,16 @@
 apply plugin: 'com.android.application'
+apply plugin: 'timestate'
+
+timeStateSetting {
+  enable = true
+}
 
 android {
   compileSdkVersion 28
   buildToolsVersion "29.0.0"
 
   defaultConfig {
-    applicationId "com.smartdengg.timestate.compile"
+    applicationId "com.smartdengg.timestate.app"
     minSdkVersion 21
     targetSdkVersion 28
     versionCode 1
