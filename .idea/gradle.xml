@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/plugin" />
+            <option value="$PROJECT_DIR$/runtime/runtime" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

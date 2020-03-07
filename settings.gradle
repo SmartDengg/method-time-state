@@ -1,4 +1,8 @@
-rootProject.name='Time state compile'
+rootProject.name='time-state-compile'
 include ':app'
 include ':plugin'
 include ':buildSrc'
+
+include ':time-state-runtime'
+project(':time-state-runtime').projectDir = new File('runtime/runtime')
+
