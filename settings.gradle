@@ -4,5 +4,5 @@ include ':plugin'
 include ':buildSrc'
 
 include ':time-state-runtime'
-project(':time-state-runtime').projectDir = new File('runtime/runtime')
+project(':time-state-runtime').projectDir = new File('time-state-runtime/runtime')
 
