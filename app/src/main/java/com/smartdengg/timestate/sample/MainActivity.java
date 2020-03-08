@@ -11,6 +11,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainActivity extends AppCompatActivity {
 
+  private AtomicBoolean A = new AtomicBoolean(false);
+  private AtomicBoolean B = new AtomicBoolean(false);
 
   @FullTimeState @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
