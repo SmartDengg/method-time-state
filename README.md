@@ -133,4 +133,4 @@ R8 / ProGuard
 问题&反馈
 ----
 
-欢迎在 [issue](https://github.com/SmartDengg/method-time-state/issues) 中提交问题或者邮件联系 hi4joker@gmail.com
+欢迎在 [issue](https://github.com/SmartDengg/method-time-state/issues) 中提问或者邮件联系我 hi4joker@gmail.com
