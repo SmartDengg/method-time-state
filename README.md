@@ -5,22 +5,28 @@
 time-state
 ====
 
-在开发环境下，通过声明注解的方式，显示函数耗时的测量工具。
+**在开发环境中，通过声明注解的方式，输出函数耗时的测量工具。**
 
-作为开发者，我们应该密切关注程序的性能，函数是我们关注的最小执行单元，因为所有的逻辑都在函数中执行，因此我们经常需要在函数执行的开始和结尾处添加日志打印语句，日志中应该包含所在线程名称，函数描述，行号以及函数耗时等信息，其中行号方便我们定位它的位置，在我看来它应该像下面这样:
+作为开发者，性能优化是一个永恒的话题，我们应该密切关注程序的性能。函数是我们关注的最小执行单元，因为所有的逻辑都执行在函数中，因此我们经常需要在函数的开始和结尾处添加打印语句，且应该包含以下信息:
 
+- 当前线程信息
+- 具体函数的签名信息
+- 函数的执行时长
+- 快速定位源文件的行号
+
+因此它看起来应该这样:
+
+```java
+Thread[main,5,main] ║ com.smartdengg.timestate.sample.MainActivity#onCreate(android.os.Bundle)void ║ (MainActivity.java:18) ====> COST: 229ms
 ```
-Thread[main,5,main] ║ com.lianjia.timestate.app.MainActivity#onCreate(android.os.Bundle)void ║ (MainActivity.java:18) ====> COST: 229ms 
-```
+
+**我想每一位开发者都不愿意重复写那些日志语句，因为你要在函数的开始和结尾各写一遍，并且还不能带入线上版本，这就意味着，写完它，再删掉它，重复如此**。我认为这种方式，不仅浪费时间，还容易在项目里面留下隐患，那些你忘记删除的代码就会成为项目"蛀虫"，因此我们需要简单高效并且安全的方式测量函数执行时间。
 
 
-**我想每一位开发者都不愿意重复写那些日志语句，你要在函数的开始和结尾各写一遍，而且还不能带到上线上版本中，这就意味着，写完它，又删除它**。这种方式，不仅浪费时间，还容易让我们项目里面长满蛀虫，因此我们需要简单高效并且安全的方式测量函数执行时间。
+因此 **time-state** 就诞生了，这个工具使用字节码重写技术，支持仅添加注解 [@TimeState](#jump-time-state) 或 [@FullTimeState](#jump-full-time-state) 在你的函数上，就能够输出格式漂亮的函数耗时等重要信息。
 
 
-这个工具使用字节码重写技术，支持仅添加一个注解 [@TimeState](#jump-time-state) 或 [@FullTimeState](#jump-full-time-state) 在你的函数上，就能够输出格式漂亮的函数耗时信息的功能，
-
-
-它与 [hugo](https://github.com/JakeWharton/hugo) 的不同之处在于：它不关心函数的参数值和返回值，只专注函数所耗时间，并且 **time-state** 支持增量编译，丝毫不会影响你的编译速度。
+它与 [hugo](https://github.com/JakeWharton/hugo) 的不同之处在于:   **time-state** 不关心函数的参数值和返回值，它只专注函数的耗时，并且支持增量编译和并发的字节码处理技术，丝毫不会影响你的编译速度。
 
 *注意:本仓库只提供了基本的字节码修改功能，是一个的 Android gradle plugin，运行时的函数测量和日志答应功能由 [method-time-state-runtime](https://github.com/SmartDengg/method-time-state-runtime) 提供*
 
@@ -55,28 +61,19 @@ apply plugin: 'timestate'
 
 ![](art/log_build.png)
 
-通过以下配置禁止 time-state 对字节码进行重写，默认为允许重写。
+time-state 有以下两种可配置方案:
+
+- `enable` : 是否开启字节码的重写功能，默认为 `true`
+- `tag` : 日志的输出 TAG，默认为 `TimeStateLogger`
 
 ```groovy
 timeStateSetting {
-  enable = false
+  enable = fasle
+  tag = 'TAG'
 }
 ```
 
-
-**3.** 通过代码对日志输出进行配置。
-
-```java
-public class MyApplication extends Application {
-
-  @Override protected void attachBaseContext(Context base) {
-    super.attachBaseContext(base);
-    TimeStateLogger.debuggable = BuildConfig.DEBUG;
-    TimeStateLogger.TAG = "Custom TAG";
-  }
-}
-```
-
+*注意: 当 `tag` 发生变更后，因为增量编译的关系，需要先手动执行 `./gradlew clean` ，然后再正常编译项目*
 
 <span id="jump-time-state">@TimeState</span>
 ----
@@ -137,5 +134,3 @@ R8 / ProGuard
 ----
 
 欢迎在 [issue](https://github.com/SmartDengg/method-time-state/issues) 中提交问题或者邮件联系 hi4joker@gmail.com
-
-

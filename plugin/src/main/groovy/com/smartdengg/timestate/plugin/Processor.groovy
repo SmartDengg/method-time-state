@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap
 import com.google.common.collect.Iterables
 import groovy.transform.PackageScope
 import org.objectweb.asm.ClassReader
+import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.ClassWriter
 
 import java.nio.file.*
@@ -76,12 +77,12 @@ class Processor {
 
     ClassReader classReader = new ClassReader(originBytes)
     ClassWriter classWriter = new ClassWriter(classReader, 0)
-    TimeStateClassAdapter classAdapter = new TimeStateClassAdapter(classWriter)
-    classReader.accept(classAdapter, ClassReader.EXPAND_FRAMES)
+    ClassVisitor timeStateClassAdapter = new TimeStateClassAdapter(new TAGClassAdapter(classWriter))
+    classReader.accept(timeStateClassAdapter, ClassReader.EXPAND_FRAMES)
 
-    List<String> tracedMethodInfo = classAdapter.measuredMethodInfo
+    List<String> tracedMethodInfo = timeStateClassAdapter.measuredMethodInfo
     if (tracedMethodInfo != null && tracedMethodInfo.size() > 0) {
-      ColoredLogger.logYellow("[TimeState] $classAdapter.className: ")
+      ColoredLogger.logYellow("[TimeState] $timeStateClassAdapter.className: ")
       for (String method : tracedMethodInfo) {
         ColoredLogger.logYellow("   --> $method")
       }

@@ -18,6 +18,8 @@ class TimeStateTransform extends Transform {
 
   private Project project
 
+  static String TAG
+
   TimeStateTransform(Project project) {
     this.project = project
   }
@@ -53,6 +55,7 @@ class TimeStateTransform extends Transform {
     ForkJoinExecutor executor = ForkJoinExecutor.instance
 
     TimeStateSetting setting = project.extensions["${TimeStateSetting.NAME}"]
+    TimeStateTransform.TAG = setting.tag
 
     TransformOutputProvider outputProvider = checkNotNull(invocation.getOutputProvider(),
         "Missing output object for run " + getName())
@@ -63,15 +66,15 @@ class TimeStateTransform extends Transform {
 
         inputs.jarInputs.each { jarInput ->
 
-          File input = jarInput.file
-          File output = outputProvider.getContentLocation(//
+          Path input = jarInput.file.toPath()
+          Path output = outputProvider.getContentLocation(//
               jarInput.name,
               jarInput.contentTypes,
               jarInput.scopes,
-              Format.JAR)
+              Format.JAR).toPath()
 
           if (!setting.enable) {
-            FileUtils.copyFile(input, output)
+            Files.copy(input, output)
           } else {
             if (invocation.isIncremental()) {
 
@@ -80,18 +83,18 @@ class TimeStateTransform extends Transform {
                   break
                 case Status.ADDED:
                 case Status.CHANGED:
-                  Files.deleteIfExists(output.toPath())
+                  Files.deleteIfExists(output)
                   executor.execute {
-                    Processor.run(input.toPath(), output.toPath(), Processor.Input.JAR)
+                    Processor.run(input, output, Processor.Input.JAR)
                   }
                   break
                 case Status.REMOVED:
-                  Files.deleteIfExists(output.toPath())
+                  Files.deleteIfExists(output)
                   break
               }
             } else {
               executor.execute {
-                Processor.run(input.toPath(), output.toPath(), Processor.Input.JAR)
+                Processor.run(input, output, Processor.Input.JAR)
               }
             }
           }

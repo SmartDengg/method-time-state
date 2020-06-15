@@ -3,6 +3,7 @@ apply plugin: 'timestate'
 
 timeStateSetting {
   enable = true
+  tag = 'TAG'
 }
 
 android {
