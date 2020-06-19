@@ -82,7 +82,7 @@ class Processor {
 
     List<String> tracedMethodInfo = timeStateClassAdapter.measuredMethodInfo
     if (tracedMethodInfo != null && tracedMethodInfo.size() > 0) {
-      ColoredLogger.logYellow("[TimeState] $timeStateClassAdapter.className: ")
+      ColoredLogger.logYellow("[TimeState] ${timeStateClassAdapter.className.replace('/', '.')}: ")
       for (String method : tracedMethodInfo) {
         ColoredLogger.logYellow("   --> $method")
       }

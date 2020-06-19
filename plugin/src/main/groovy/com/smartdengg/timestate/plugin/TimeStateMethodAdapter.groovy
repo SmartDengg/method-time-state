@@ -118,8 +118,7 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
   void visitEnd() {
     super.visitEnd()
     if (isWoven) {
-      measuredMethodInfo.add(
-          methodReturn + " " + methodName + "(" + methodArguments + ")" + methodReturn)
+      measuredMethodInfo.add(methodReturn + " " + methodName + "(" + methodArguments + ")")
     }
   }
 
