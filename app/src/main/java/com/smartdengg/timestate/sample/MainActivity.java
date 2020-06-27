@@ -1,12 +1,10 @@
 package com.smartdengg.timestate.sample;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.smartdengg.timestate.runtime.FullTimeState;
 import com.smartdengg.timestate.runtime.TimeState;
+import com.smartdengg.timestate.runtime.TimeStatePro;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,7 +12,15 @@ public class MainActivity extends AppCompatActivity {
   private AtomicBoolean A = new AtomicBoolean(false);
   private AtomicBoolean B = new AtomicBoolean(false);
 
-  @FullTimeState @Override protected void onCreate(Bundle savedInstanceState) {
+  static void function20Millis() {
+    try {
+      Thread.sleep(20);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @TimeStatePro @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
@@ -26,23 +32,19 @@ public class MainActivity extends AppCompatActivity {
 
     new Thread(new Runnable() {
 
-      @FullTimeState @Override public void run() {
-        function20Millis();
-        function30Millis();
-        function40Millis();
+      @TimeStatePro @Override public void run() {
+        try {
+          Thread.sleep(2000);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
       }
     }).start();
 
     recursive();
-
-    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-      @Override public void run() {
-        recursive();
-      }
-    }, 1000);
   }
 
-  @FullTimeState void recursive() {
+  @TimeStatePro void recursive() {
 
     initA();
     initB();
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  @FullTimeState private void call() {
+  @TimeStatePro private void call() {
     try {
       Thread.sleep(10);
     } catch (InterruptedException e) {
@@ -84,14 +86,6 @@ public class MainActivity extends AppCompatActivity {
     function20Millis();
     function30Millis();
     function40Millis();
-  }
-
-  static void function20Millis() {
-    try {
-      Thread.sleep(20);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
   }
 
   void function30Millis() {

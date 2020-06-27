@@ -58,7 +58,7 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
   @Override /*①*/
   AnnotationVisitor visitAnnotation(String desc, boolean visible) {
     hasTimeAnnotation |= desc == "Lcom/smartdengg/timestate/runtime/TimeState;"
-    hasFullTimeAnnotation |= desc == "Lcom/smartdengg/timestate/runtime/FullTimeState;"
+    hasFullTimeAnnotation |= desc == "Lcom/smartdengg/timestate/runtime/TimeStatePro;"
     hasTracedAnnotation |= desc == "Lcom/smartdengg/timestate/runtime/TimeTraced;"
     return super.visitAnnotation(desc, visible)
   }

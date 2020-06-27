@@ -11,19 +11,20 @@ time-state
 
 - 当前线程信息
 - 具体函数的签名信息
-- 函数的执行时长
 - 快速定位源文件的行号
+- 函数的执行时长
 
-因此它看起来应该这样:
+
+对应的日志输出:
 
 ```java
-Thread[main,5,main] ║ com.smartdengg.timestate.sample.MainActivity#onCreate(android.os.Bundle)void ║ (MainActivity.java:18) ====> COST: 229ms
+Thread[main,5,main] | void print(java.lang.String) | MainActivity.java:18 | COST: 229ms
 ```
 
-**我想每一位开发者都不愿意重复写那些日志语句，因为你要在函数的开始和结尾各写一遍，并且还不能带入线上版本，这就意味着，写完它，再删掉它，重复如此**。我认为这种方式，不仅浪费时间，还容易在项目里面留下隐患，那些你忘记删除的代码就会成为项目"蛀虫"，因此我们需要简单高效并且安全的方式测量函数执行时间。
+**我认为每一位开发者都不愿意重复写那些日志语句，因为你要在函数的开始和结尾各写一遍，并且还不能带入线上版本，这就意味着，写完它，再删掉它，重复如此**。我认为这种方式，不仅浪费时间，还容易在项目里面留下隐患，那些你忘记删除的代码就会成为项目"蛀虫"，因此我们需要简单高效并且安全的方式测量函数执行时间。
 
 
-因此 **time-state** 就诞生了，这个工具使用字节码重写技术，支持仅添加注解 [@TimeState](#jump-time-state) 或 [@FullTimeState](#jump-full-time-state) 在你的函数上，就能够输出格式漂亮的函数耗时等重要信息。
+因此 **time-state** 就诞生了，这个工具使用字节码重写技术，支持仅添加注解 [@TimeState](#jump-time-state) 或 [@TimeStatePro](#jump-time-state-pro) 在你的函数上，就能够输出格式漂亮的函数耗时等重要信息。
 
 
 它与 [hugo](https://github.com/JakeWharton/hugo) 的不同之处在于:   **time-state** 不关心函数的参数值和返回值，它只专注函数的耗时，并且支持增量编译和并发的字节码处理技术，丝毫不会影响你的编译速度。
@@ -34,7 +35,7 @@ Thread[main,5,main] ║ com.smartdengg.timestate.sample.MainActivity#onCreate(an
 安装&使用
 ----
 
-**1.** 在工程的根 `build.gradle` 中添加 **time-state** Android gradle plugin 的依赖，在 [CHANGELOG](./CHANGELOG.md) 中记录了所有可用版本信息。
+**1.** 在工程的根 `build.gradle` 中添加 **time-state** 依赖。
 
 ```groovy
 buildscript {
@@ -44,7 +45,7 @@ buildscript {
     maven { url 'https://jitpack.io' }
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.5.3'
+    classpath 'com.android.tools.build:gradle:3.6.3'
     classpath 'com.github.SmartDengg.method-time-state:plugin:1.0.0'
   }
 }
@@ -95,13 +96,13 @@ timeStateSetting {
 
 ![](art/log_time_state.png)
 
-<span id="jump-full-time-state">@FullTimeState</span>
+<span id="jump-time-state-pro">@TimeStatePro</span>
 ----
 
-如果函数内存在其他函数调用，你可以使用增强的 `@FullTimeState` 打印全量的函数耗时。
+如果函数内存在其他函数调用，你可以使用增强的 `@TimeStatePro` 打印全量的函数耗时。
 
 ```java
-  @FullTimeState 
+  @TimeStatePro 
   private void call() {
     try {
       Thread.sleep(10);
@@ -117,7 +118,14 @@ timeStateSetting {
 
 日志结果如下，由上至下打印了 `call()` 函数:
 
-![](art/log_full_time_state.png)
+![](art/log_time_state_pro.png)
+
+工作原理
+----
+
+在编译阶段对被特殊注解标记的函数进行字节码的修改，在函数的开始和结束处分别添加计时操作。
+
+![](art/timestate.png)
 
 R8 / ProGuard
 ----

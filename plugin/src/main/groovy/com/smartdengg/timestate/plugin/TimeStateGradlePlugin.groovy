@@ -26,6 +26,10 @@ class TimeStateGradlePlugin implements Plugin<Project> {
       url "https://jitpack.io"
     }
 
+    println()
+    ColoredLogger.logBlue('#### 欢迎使用 TimeState 编译插件，任何疑问请联系 hi4joker@gmail.com ####')
+    println()
+
     //    project.dependencies {
     //      implementation 'com.github.SmartDengg:method-time-state-runtime:1.0.0'
     //    }
