@@ -9,30 +9,25 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainActivity extends AppCompatActivity {
 
-  private AtomicBoolean A = new AtomicBoolean(false);
-  private AtomicBoolean B = new AtomicBoolean(false);
+  private AtomicBoolean initAOnce = new AtomicBoolean(false);
+  private AtomicBoolean initBOnce = new AtomicBoolean(false);
 
-  static void function20Millis() {
-    try {
-      Thread.sleep(20);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-  }
-
-  @TimeStatePro @Override protected void onCreate(Bundle savedInstanceState) {
+  @TimeStatePro
+  @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    for (int i = 0, n = 100; i < n; i++) {
+    for (int i = 0, n = 1000; i < n; i++) {
       TextView textView = new TextView(this);
     }
 
-    call();
+    callIn100Millis("1", "2", "3");
+
+    callRecursive();
 
     new Thread(new Runnable() {
-
-      @TimeStatePro @Override public void run() {
+      @TimeStatePro
+      @Override public void run() {
         try {
           Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -41,33 +36,28 @@ public class MainActivity extends AppCompatActivity {
       }
     }).start();
 
-    recursive();
+    //callThrowException();
   }
 
-  @TimeStatePro void recursive() {
-
+  @TimeStatePro
+  void callRecursive() {
     initA();
     initB();
   }
 
   private void initA() {
-
-    if (A.compareAndSet(false, true)) {
-
+    if (initAOnce.compareAndSet(false, true)) {
       try {
         Thread.sleep(100);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-
-      recursive();
+      callRecursive();
     }
   }
 
   private void initB() {
-
-    if (B.compareAndSet(false, true)) {
-
+    if (initBOnce.compareAndSet(false, true)) {
       try {
         Thread.sleep(500);
       } catch (InterruptedException e) {
@@ -76,16 +66,43 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  @TimeStatePro private void call() {
+  @TimeStatePro
+  private void callIn100Millis(String s1, String s2, String s3) {
     try {
       Thread.sleep(10);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-
     function20Millis();
     function30Millis();
     function40Millis();
+  }
+
+  @TimeStatePro
+  private void callThrowException() {
+    functionThrowException();
+  }
+
+  static void functionThrowException() {
+    function20Millis();
+    throw new AssertionError();
+  }
+
+  @TimeState
+  static void function10Millis() {
+    try {
+      Thread.sleep(20);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
+  static void function20Millis() {
+    try {
+      Thread.sleep(20);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 
   void function30Millis() {
@@ -96,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  @TimeState void function40Millis() {
+  void function40Millis() {
     try {
       Thread.sleep(40);
     } catch (InterruptedException e) {

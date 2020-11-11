@@ -12,19 +12,25 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
 
   private static final UNKNOWN_LINENUMBER = -1
 
+  //  TimeStateLogger
   private static final String timeStateLoggerOwner = "com/smartdengg/timestate/runtime/TimeStateLogger"
-  private static final String timeStateLoggerEntry = "entry"
-  private static final String timeStateLoggerExit = "exit"
-  private static final String timeStateLoggerLogName = "log"
+  private static final String timeStateLoggerEntryMethodName = "entry"
+  private static final String timeStateLoggerExitMethodName = "exit"
+  private static final String timeStateLoggerLogMethodName = "log"
 
-  //void entry(String encloseDescriptor, String descriptor, String className, String methodName, String arguments, String returnType)
-  private static final String timeStateLoggerStartDesc = "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V"
+  // void entry(boolean isEnclosing, String descriptor)
+  private static final String timeStateLoggerEntryMethodDesc = "(ZLjava/lang/String;)V"
+  // void exit(boolean isEnclosing, String descriptor, String lineNumber)
+  private static final String timeStateLoggerExitMethodDesc = "(ZLjava/lang/String;Ljava/lang/String;)V"
+  // void log()
+  private static final String timeStateLoggerLogMethodDesc = "()V"
 
-  //void exit(String encloseDescriptor, String descriptor, String lineNumber)
-  private static final String timeStateLoggerStopDesc = "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V"
-
-  //  log(String encloseDescriptor)
-  private static final String timeStateLoggerLogDesc = "(Ljava/lang/String;)V"
+  //  @TimeState
+  private static final String timeStateDesc = "Lcom/smartdengg/timestate/runtime/TimeState;"
+  //  @TimeStatePro
+  private static final String TimeStateProDesc = "Lcom/smartdengg/timestate/runtime/TimeStatePro;"
+  //  @TimeTraced
+  private static final String TimeTracedDesc = "Lcom/smartdengg/timestate/runtime/TimeTraced;"
 
   private String className
   private String methodName
@@ -33,9 +39,9 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
   private String methodReturn
   private String encloseDescriptor
 
-  private boolean hasTimeAnnotation
-  private boolean hasFullTimeAnnotation
-  private boolean hasTracedAnnotation
+  private boolean hasTimeStateAnnotation
+  private boolean hasTimeStateProAnnotation
+  private boolean hasTimeTracedAnnotation
   private boolean isWoven
   private int methodEntryLineNumber = UNKNOWN_LINENUMBER
   private List<String> measuredMethodInfo
@@ -57,9 +63,9 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
 
   @Override /*①*/
   AnnotationVisitor visitAnnotation(String desc, boolean visible) {
-    hasTimeAnnotation |= desc == "Lcom/smartdengg/timestate/runtime/TimeState;"
-    hasFullTimeAnnotation |= desc == "Lcom/smartdengg/timestate/runtime/TimeStatePro;"
-    hasTracedAnnotation |= desc == "Lcom/smartdengg/timestate/runtime/TimeTraced;"
+    hasTimeStateAnnotation |= desc == timeStateDesc
+    hasTimeStateProAnnotation |= desc == TimeStateProDesc
+    hasTimeTracedAnnotation |= desc == TimeTracedDesc
     return super.visitAnnotation(desc, visible)
   }
 
@@ -67,7 +73,7 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
   void visitCode() {
     if (hasAnyTimeStateAnnotation()) {
       count++
-      addTimedAnno(mv)
+      addTimedAnnotation(mv)
       addTimeStateCodeBlock(className, methodName, methodDesc, "NULL", true, false)
     }
     super.visitCode()
@@ -83,13 +89,14 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
 
   @Override
   void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
-    if (hasFullTimeStateAnnotation() && owner != timeStateLoggerOwner) {
+    boolean shouldWave = hasTimeStateProAnnotation() && owner != timeStateLoggerOwner
+    if (shouldWave) {
       count++
-      addTimedAnno(mv)
+      addTimedAnnotation(mv)
       addTimeStateCodeBlock(owner.replace("/", '.'), name, desc, "NULL", true, false)
     }
     super.visitMethodInsn(opcode, owner, name, desc, itf)
-    if (hasFullTimeStateAnnotation() && owner != timeStateLoggerOwner) {
+    if (shouldWave) {
       addTimeStateCodeBlock(owner.replace("/", '.'), name, desc, "NULL", false, true)
     }
   }
@@ -107,14 +114,6 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
   }
 
   @Override
-  void visitMaxs(int maxStack, int maxLocals) {
-    if (isWoven) {
-      maxStack += 6 * count
-    }
-    super.visitMaxs(maxStack, maxLocals)
-  }
-
-  @Override
   void visitEnd() {
     super.visitEnd()
     if (isWoven) {
@@ -123,39 +122,37 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
   }
 
   private void addTimeStateCodeBlock(String owner, String name, String desc, String lineNumber,
-      boolean start,
-      boolean stop) {
-
-    visitLdcInsn(encloseDescriptor)
-    visitLdcInsn(getDescriptor(owner, name, getArguments(desc), getReturnType(desc)))
-    if (start) {
-      visitLdcInsn(owner)
-      visitLdcInsn(name)
-      visitLdcInsn(getArguments(desc))
-      visitLdcInsn(getReturnType(desc))
-      visitMethodInsn(INVOKESTATIC, timeStateLoggerOwner, timeStateLoggerEntry,
-          timeStateLoggerStartDesc, false)
-    } else if (stop) {
+      boolean enter, boolean exit) {
+    String methodDescriptor = getDescriptor(owner, name, getArguments(desc), getReturnType(desc))
+    if (methodDescriptor == encloseDescriptor) {
+      visitInsn(ICONST_1)
+    } else {
+      visitInsn(ICONST_0)
+    }
+    visitLdcInsn(methodDescriptor)
+    if (enter) {
+      visitMethodInsn(INVOKESTATIC, timeStateLoggerOwner, timeStateLoggerEntryMethodName,
+          timeStateLoggerEntryMethodDesc, false)
+    } else if (exit) {
       visitLdcInsn(lineNumber == "NULL" ? "" : lineNumber)
-      visitMethodInsn(INVOKESTATIC, timeStateLoggerOwner, timeStateLoggerExit,
-          timeStateLoggerStopDesc, false)
+      visitMethodInsn(INVOKESTATIC, timeStateLoggerOwner, timeStateLoggerExitMethodName,
+          timeStateLoggerExitMethodDesc, false)
     }
   }
 
   private void addTimeStateLogBlock() {
-    visitLdcInsn(encloseDescriptor)
-    visitMethodInsn(INVOKESTATIC, timeStateLoggerOwner, timeStateLoggerLogName,
-        timeStateLoggerLogDesc, false)
+    visitMethodInsn(INVOKESTATIC, timeStateLoggerOwner, timeStateLoggerLogMethodName,
+        timeStateLoggerLogMethodDesc, false)
   }
 
   @NotNull
   private static String getArguments(String methodDesc) {
     Type[] argumentTypes = Type.getArgumentTypes(methodDesc)
-    StringBuilder arguments = new StringBuilder(argumentTypes.length)
+    def arguments = []
     for (type in argumentTypes) {
-      arguments.append(type.className)
+      arguments.add(type.className)
     }
-    return arguments.toString()
+    return arguments.join(';')
   }
 
   @NotNull
@@ -164,25 +161,24 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
     return returnType.className
   }
 
-  private void addTimedAnno(MethodVisitor mv) {
+  private void addTimedAnnotation(MethodVisitor mv) {
     if (!isWoven) {
-      AnnotationVisitor annotationVisitor =
-          mv.visitAnnotation("Lcom/smartdengg/timestate/runtime/TimeTraced;", false)
+      AnnotationVisitor annotationVisitor = mv.visitAnnotation(TimeTracedDesc, false)
       annotationVisitor.visitEnd()
       this.isWoven = true
     }
   }
 
   private boolean hasAnyTimeStateAnnotation() {
-    return (hasTimeAnnotation || hasFullTimeAnnotation) && !hasTracedAnnotation
+    return (hasTimeStateAnnotation || hasTimeStateProAnnotation) && !hasTimeTracedAnnotation
   }
 
-  private boolean hasFullTimeStateAnnotation() {
-    return hasFullTimeAnnotation && !hasTracedAnnotation
+  private boolean hasTimeStateProAnnotation() {
+    return hasTimeStateProAnnotation && !hasTimeTracedAnnotation
   }
 
-  private static String getDescriptor(String className, String methodName, String arguments,
+  private static String getDescriptor(String owner, String name, String arguments,
       String returnType) {
-    return "${className}.${methodName}(${arguments})$returnType"
+    return "${owner}/${name}/${arguments}/$returnType"
   }
 }
