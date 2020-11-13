@@ -39,7 +39,7 @@ class TAGClassAdapter extends ClassVisitor implements Opcodes {
     }
     if (methodVisitor != null) {
       ColoredLogger.logRed(
-          "timestate: name = $name,descriptor = $descriptor,signature = $name,signature = $name")
+          "timestate:class = $className,name = $name,descriptor = $descriptor,signature = $name,signature = $name")
     }
     return methodVisitor
   }
