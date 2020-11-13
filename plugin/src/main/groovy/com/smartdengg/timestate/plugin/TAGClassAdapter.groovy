@@ -11,7 +11,7 @@ import org.objectweb.asm.Opcodes
  */
 class TAGClassAdapter extends ClassVisitor implements Opcodes {
 
-  private static final String TARGET_CLASS_NAME = "com.smartdengg.timestate.runtime.TimeStateLogger"
+  private static final String LOGGER_CLASS_NAME = "com.smartdengg.timestate.runtime.TimeStateLogger"
 
   private String className
 
@@ -31,15 +31,15 @@ class TAGClassAdapter extends ClassVisitor implements Opcodes {
   MethodVisitor visitMethod(int access, String name, String descriptor, String signature,
       String[] exceptions) {
     MethodVisitor methodVisitor = cv.visitMethod(access, name, descriptor, signature, exceptions)
-    if (methodVisitor != null && className == TARGET_CLASS_NAME && name == '<clinit>') {
+    if (methodVisitor != null && className == LOGGER_CLASS_NAME && name == '<clinit>') {
       methodVisitor.visitLdcInsn(TimeStateTransform.TAG)
-      methodVisitor.visitFieldInsn(PUTSTATIC, TARGET_CLASS_NAME.replace('.', '/'), "TAG",
+      methodVisitor.visitFieldInsn(PUTSTATIC, LOGGER_CLASS_NAME.replace('.', '/'), "TAG",
           "Ljava/lang/String;")
       ColoredLogger.logBlue("TimeStateLogger.TAG = $TimeStateTransform.TAG")
     }
-    if (methodVisitor != null && className == TARGET_CLASS_NAME) {
-      ColoredLogger.
-          logRed("name = $name,descriptor = $descriptor,signature = $name,signature = $name")
+    if (methodVisitor != null) {
+      ColoredLogger.logRed(
+          "timestate: name = $name,descriptor = $descriptor,signature = $name,signature = $name")
     }
     return methodVisitor
   }

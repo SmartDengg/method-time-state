@@ -6,7 +6,7 @@ import org.objectweb.asm.*
 /**
  * 创建时间:  2019/09/25 17:59 <br>
  * 作者:  SmartDengg <br>
- * 描述:
+ * 描述:  对 @TimeState 和 @TimeStatePro 标记的函数进行字节码的修改
  * */
 class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
 

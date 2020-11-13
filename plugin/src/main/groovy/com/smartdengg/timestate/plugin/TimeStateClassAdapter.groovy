@@ -7,7 +7,7 @@ import org.objectweb.asm.Opcodes
 /**
  * 创建时间:  2019/09/25 17:58 <br>
  * 作者:  SmartDengg <br>
- * 描述:
+ * 描述:  对
  **/
 class TimeStateClassAdapter extends ClassVisitor implements Opcodes {
 
