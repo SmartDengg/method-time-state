@@ -37,7 +37,10 @@ class TAGClassAdapter extends ClassVisitor implements Opcodes {
           "Ljava/lang/String;")
       ColoredLogger.logBlue("TimeStateLogger.TAG = $TimeStateTransform.TAG")
     }
-
+    if (methodVisitor != null && className == TARGET_CLASS_NAME) {
+      ColoredLogger.
+          logRed("name = $name,descriptor = $descriptor,signature = $name,signature = $name")
+    }
     return methodVisitor
   }
 }
