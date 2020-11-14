@@ -12,6 +12,7 @@ import org.objectweb.asm.Opcodes
 class TAGClassAdapter extends ClassVisitor implements Opcodes {
 
   private static final String LOGGER_CLASS_NAME = "com.smartdengg.timestate.runtime.TimeStateLogger"
+  private static final String LOGGER_TAG_FILED_NAME = "TAG"
 
   private String className
 
@@ -33,13 +34,9 @@ class TAGClassAdapter extends ClassVisitor implements Opcodes {
     MethodVisitor methodVisitor = cv.visitMethod(access, name, descriptor, signature, exceptions)
     if (methodVisitor != null && className == LOGGER_CLASS_NAME && name == '<clinit>') {
       methodVisitor.visitLdcInsn(TimeStateTransform.TAG)
-      methodVisitor.visitFieldInsn(PUTSTATIC, LOGGER_CLASS_NAME.replace('.', '/'), "TAG",
-          "Ljava/lang/String;")
+      methodVisitor.visitFieldInsn(PUTSTATIC, LOGGER_CLASS_NAME.replace('.', '/'),
+          LOGGER_TAG_FILED_NAME, "Ljava/lang/String;")
       ColoredLogger.logBlue("TimeStateLogger.TAG = $TimeStateTransform.TAG")
-    }
-    if (methodVisitor != null) {
-      ColoredLogger.logRed(
-          "timestate:class = $className,name = $name,descriptor = $descriptor,signature = $name,signature = $name")
     }
     return methodVisitor
   }

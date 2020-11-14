@@ -3,7 +3,6 @@ package com.smartdengg.timestate.sample;
 import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.smartdengg.timestate.runtime.TimeState;
 import com.smartdengg.timestate.runtime.TimeStatePro;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -68,36 +67,21 @@ public class MainActivity extends AppCompatActivity {
 
   @TimeStatePro
   private void callIn100Millis(String s1, String s2, String s3) {
-    try {
-      Thread.sleep(10);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    function10Millis();
     function20Millis();
     function30Millis();
     function40Millis();
   }
 
-  @TimeStatePro
-  private void callThrowException() {
-    functionThrowException();
-  }
-
-  static void functionThrowException() {
-    function20Millis();
-    throw new AssertionError();
-  }
-
-  @TimeState
-  static void function10Millis() {
+  void function10Millis() {
     try {
-      Thread.sleep(20);
+      Thread.sleep(10);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
   }
 
-  static void function20Millis() {
+  void function20Millis() {
     try {
       Thread.sleep(20);
     } catch (InterruptedException e) {
@@ -119,5 +103,15 @@ public class MainActivity extends AppCompatActivity {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
+  }
+
+  @TimeStatePro
+  private void callThrowException() {
+    functionThrowException();
+  }
+
+  private void functionThrowException() {
+    function20Millis();
+    throw new AssertionError();
   }
 }
