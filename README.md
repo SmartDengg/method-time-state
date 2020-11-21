@@ -46,7 +46,7 @@ buildscript {
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:3.6.3'
-    classpath 'com.github.SmartDengg.method-time-state:plugin:1.0.0'
+    classpath 'com.github.SmartDengg.method-time-state:plugin:1.2.0'
   }
 }
 ```
