@@ -29,7 +29,7 @@ Thread[main,5,main] | void print(java.lang.String) | MainActivity.java:18 | COST
 
 它与 [hugo](https://github.com/JakeWharton/hugo) 的不同之处在于:   **time-state** 不关心函数的参数值和返回值，它只专注函数的耗时，并且支持增量编译和并发的字节码处理技术，丝毫不会影响你的编译速度。
 
-*注意:本仓库只提供了基本的字节码修改功能，是一个的 Android gradle plugin，运行时的函数测量和日志答应功能由 [method-time-state-runtime](https://github.com/SmartDengg/method-time-state-runtime) 提供*
+*注意:本仓库只提供了基本的字节码修改功能，是一个的 Android gradle plugin，运行时的函数测量和日志打印功能由 [method-time-state-runtime](https://github.com/SmartDengg/method-time-state-runtime) 提供*
 
 
 安装&使用
