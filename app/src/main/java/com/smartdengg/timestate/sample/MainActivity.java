@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    for (int i = 0, n = 1000; i < n; i++) {
+    for (int i = 0, n = 20; i < n; i++) {
       TextView textView = new TextView(this);
     }
 
