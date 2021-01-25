@@ -13,6 +13,7 @@ class TAGClassAdapter extends ClassVisitor implements Opcodes {
 
   private static final String LOGGER_CLASS_NAME = "com.smartdengg.timestate.runtime.TimeStateLogger"
   private static final String LOGGER_TAG_FILED_NAME = "TAG"
+  private static final String LOGGER_EMOJI_FILED_NAME = "SUPPORT_EMOJI"
 
   private String className
 
@@ -33,11 +34,27 @@ class TAGClassAdapter extends ClassVisitor implements Opcodes {
       String[] exceptions) {
     MethodVisitor methodVisitor = cv.visitMethod(access, name, descriptor, signature, exceptions)
     if (methodVisitor != null && className == LOGGER_CLASS_NAME && name == '<clinit>') {
-      methodVisitor.visitLdcInsn(TimeStateTransform.TAG)
-      methodVisitor.visitFieldInsn(PUTSTATIC, LOGGER_CLASS_NAME.replace('.', '/'),
-          LOGGER_TAG_FILED_NAME, "Ljava/lang/String;")
-      ColoredLogger.logBlue("TimeStateLogger.TAG = $TimeStateTransform.TAG")
+      visitTag(methodVisitor)
+      visitEmoji(methodVisitor)
     }
     return methodVisitor
+  }
+
+  private static void visitTag(MethodVisitor methodVisitor) {
+    methodVisitor.visitLdcInsn(TimeStateTransform.tag)
+    methodVisitor.visitFieldInsn(PUTSTATIC, LOGGER_CLASS_NAME.replace('.', '/'),
+        LOGGER_TAG_FILED_NAME, "Ljava/lang/String;")
+    ColoredLogger.logBlue("TimeStateLogger.TAG = $TimeStateTransform.tag")
+  }
+
+  private static void visitEmoji(MethodVisitor methodVisitor) {
+    if (TimeStateTransform.emoji) {
+      methodVisitor.visitInsn(ICONST_1)
+    } else {
+      methodVisitor.visitInsn(ICONST_0)
+    }
+    methodVisitor.visitFieldInsn(PUTSTATIC, LOGGER_CLASS_NAME.replace('.', '/'),
+        LOGGER_EMOJI_FILED_NAME, "Z")
+    ColoredLogger.logBlue("TimeStateLogger.SUPPORT_EMOJI = $TimeStateTransform.emoji")
   }
 }

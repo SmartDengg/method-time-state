@@ -34,8 +34,8 @@ class TimeStateGradlePlugin implements Plugin<Project> {
     //      implementation 'com.github.SmartDengg:method-time-state-runtime:1.2.0'
     //    }
 
-    project.configurations.implementation.dependencies.
-        add(project.dependencies.create(project.rootProject.findProject("time-state-runtime")))
+    project.configurations.implementation.dependencies.add(project.dependencies.create(
+        project.rootProject.findProject("time-state-runtime")))
 
     project.extensions["${TimeStateSetting.NAME}"] = project.objects.newInstance(TimeStateSetting)
 

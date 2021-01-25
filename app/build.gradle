@@ -4,6 +4,7 @@ apply plugin: 'timestate'
 timeStateSetting {
   enable = true
   tag = 'TIME_STATE'
+  emoji = true
 }
 
 android {

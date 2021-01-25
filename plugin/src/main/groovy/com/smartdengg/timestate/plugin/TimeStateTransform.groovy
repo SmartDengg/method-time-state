@@ -18,7 +18,8 @@ class TimeStateTransform extends Transform {
 
   private Project project
 
-  static String TAG
+  static String tag
+  static boolean emoji
 
   TimeStateTransform(Project project) {
     this.project = project
@@ -55,7 +56,8 @@ class TimeStateTransform extends Transform {
     ForkJoinExecutor executor = ForkJoinExecutor.instance
 
     TimeStateSetting setting = project.extensions["${TimeStateSetting.NAME}"]
-    TimeStateTransform.TAG = setting.tag
+    TimeStateTransform.tag = setting.tag
+    TimeStateTransform.emoji = setting.emoji
 
     TransformOutputProvider outputProvider = checkNotNull(invocation.getOutputProvider(),
         "Missing output object for run " + getName())
@@ -77,7 +79,6 @@ class TimeStateTransform extends Transform {
             Files.copy(input, output)
           } else {
             if (invocation.isIncremental()) {
-
               switch (jarInput.status) {
                 case Status.NOTCHANGED:
                   break
