@@ -1,50 +1,30 @@
 package com.smartdengg.timestate.plugin
 
+import com.smartdengg.timestate.plugin.Constants
 import org.jetbrains.annotations.NotNull
 import org.objectweb.asm.*
 
 /**
  * 创建时间:  2019/09/25 17:59 <br>
  * 作者:  SmartDengg <br>
- * 描述:  对 @TimeState 和 @TimeStatePro 标记的函数进行字节码的修改
- * */
+ * 描述:  对 @TimeState 和 @TimeStatePro 标记的函数进行字节码的修改*/
 class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
 
   private static final UNKNOWN_LINENUMBER = -1
 
-  //  TimeStateLogger
-  private static final String timeStateLoggerOwner = "com/smartdengg/timestate/runtime/TimeStateLogger"
-  private static final String timeStateLoggerEntryMethodName = "entry"
-  private static final String timeStateLoggerExitMethodName = "exit"
-  private static final String timeStateLoggerLogMethodName = "log"
-
-  // void entry(boolean isEnclosing, String descriptor)
-  private static final String timeStateLoggerEntryMethodDesc = "(ZLjava/lang/String;)V"
-  // void exit(boolean isEnclosing, String descriptor, String lineNumber)
-  private static final String timeStateLoggerExitMethodDesc = "(ZLjava/lang/String;Ljava/lang/String;)V"
-  // void log()
-  private static final String timeStateLoggerLogMethodDesc = "()V"
-
-  //  @TimeState
-  private static final String timeStateDesc = "Lcom/smartdengg/timestate/runtime/TimeState;"
-  //  @TimeStatePro
-  private static final String TimeStateProDesc = "Lcom/smartdengg/timestate/runtime/TimeStatePro;"
-  //  @TimeTraced
-  private static final String TimeTracedDesc = "Lcom/smartdengg/timestate/runtime/TimeTraced;"
-
-  private String className
-  private String methodName
-  private String methodDesc
-  private String methodArguments
-  private String methodReturn
-  private String encloseDescriptor
+  private final String className
+  private final String methodName
+  private final String methodDesc
+  private final String methodArguments
+  private final String methodReturn
+  private final String encloseDescriptor
+  private final List<String> measuredMethodInfo
 
   private boolean hasTimeStateAnnotation
   private boolean hasTimeStateProAnnotation
   private boolean hasTimeTracedAnnotation
   private boolean isWoven
   private int methodEntryLineNumber = UNKNOWN_LINENUMBER
-  private List<String> measuredMethodInfo
   private int count
 
   TimeStateMethodAdapter(MethodVisitor mv, String className, String methodName, String desc,
@@ -63,9 +43,9 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
 
   @Override /*①*/
   AnnotationVisitor visitAnnotation(String desc, boolean visible) {
-    hasTimeStateAnnotation |= desc == timeStateDesc
-    hasTimeStateProAnnotation |= desc == TimeStateProDesc
-    hasTimeTracedAnnotation |= desc == TimeTracedDesc
+    hasTimeStateAnnotation |= desc == Constants.timeStateDesc
+    hasTimeStateProAnnotation |= desc == Constants.timeStateProDesc
+    hasTimeTracedAnnotation |= desc == Constants.timeTracedDesc
     return super.visitAnnotation(desc, visible)
   }
 
@@ -73,8 +53,8 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
   void visitCode() {
     if (hasAnyTimeStateAnnotation()) {
       count++
-      addTimedAnnotation(mv)
-      addTimeStateCodeBlock(className, methodName, methodDesc, "NULL", true, false)
+      addTimedAnnotation()
+      addTimeStateCodeBlock(className, methodName, methodDesc, null, true, false)
     }
     super.visitCode()
   }
@@ -89,22 +69,22 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
 
   @Override
   void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
-    boolean shouldWave = hasTimeStateProAnnotation() && owner != timeStateLoggerOwner
+    boolean shouldWave = hasTimeStateProAnnotation() && owner != Constants.timeStateLoggerOwner
     if (shouldWave) {
       count++
-      addTimedAnnotation(mv)
-      addTimeStateCodeBlock(owner.replace("/", '.'), name, desc, "NULL", true, false)
+      addTimedAnnotation()
+      addTimeStateCodeBlock(owner.replace("/", '.'), name, desc, null, true, false)
     }
     super.visitMethodInsn(opcode, owner, name, desc, itf)
     if (shouldWave) {
-      addTimeStateCodeBlock(owner.replace("/", '.'), name, desc, "NULL", false, true)
+      addTimeStateCodeBlock(owner.replace("/", '.'), name, desc, null, false, true)
     }
   }
 
   @Override /*④*/
   void visitInsn(int opcode) {
     if (hasAnyTimeStateAnnotation()) {
-      if (opcode >= IRETURN && opcode <= RETURN) {
+      if (opcode == ATHROW || opcode >= IRETURN && opcode <= RETURN) {
         addTimeStateCodeBlock(className, methodName, methodDesc,
             String.valueOf(methodEntryLineNumber), false, true)
         addTimeStateLogBlock()
@@ -131,18 +111,28 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
     }
     visitLdcInsn(methodDescriptor)
     if (enter) {
-      visitMethodInsn(INVOKESTATIC, timeStateLoggerOwner, timeStateLoggerEntryMethodName,
-          timeStateLoggerEntryMethodDesc, false)
+      visitMethodInsn(INVOKESTATIC,
+          Constants.timeStateLoggerOwner,
+          Constants.timeStateLoggerEntryMethodName,
+          Constants.timeStateLoggerEntryMethodDesc,
+          false)
     } else if (exit) {
-      visitLdcInsn(lineNumber == "NULL" ? "" : lineNumber)
-      visitMethodInsn(INVOKESTATIC, timeStateLoggerOwner, timeStateLoggerExitMethodName,
-          timeStateLoggerExitMethodDesc, false)
+      // 不使用 ACONST_NULL 的原因是: 它将生成两条指令 aconst_null 和 checkcast，不够简洁
+      visitLdcInsn(lineNumber == null ? '' : lineNumber)
+      visitMethodInsn(INVOKESTATIC,
+          Constants.timeStateLoggerOwner,
+          Constants.timeStateLoggerExitMethodName,
+          Constants.timeStateLoggerExitMethodDesc,
+          false)
     }
   }
 
   private void addTimeStateLogBlock() {
-    visitMethodInsn(INVOKESTATIC, timeStateLoggerOwner, timeStateLoggerLogMethodName,
-        timeStateLoggerLogMethodDesc, false)
+    visitMethodInsn(INVOKESTATIC,
+        Constants.timeStateLoggerOwner,
+        Constants.timeStateLoggerLogMethodName,
+        Constants.timeStateLoggerLogMethodDesc,
+        false)
   }
 
   @NotNull
@@ -161,11 +151,11 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
     return returnType.className
   }
 
-  private void addTimedAnnotation(MethodVisitor mv) {
+  private void addTimedAnnotation() {
     if (!isWoven) {
-      AnnotationVisitor annotationVisitor = mv.visitAnnotation(TimeTracedDesc, false)
+      AnnotationVisitor annotationVisitor = mv.visitAnnotation(Constants.timeTracedDesc, false)
       annotationVisitor.visitEnd()
-      this.isWoven = true
+      isWoven = true
     }
   }
 

@@ -4,15 +4,15 @@ import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.smartdengg.timestate.runtime.TimeStatePro;
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainActivity extends AppCompatActivity {
 
-  private AtomicBoolean initAOnce = new AtomicBoolean(false);
-  private AtomicBoolean initBOnce = new AtomicBoolean(false);
+  private final AtomicBoolean initAOnce = new AtomicBoolean(false);
+  private final AtomicBoolean initBOnce = new AtomicBoolean(false);
 
-  @TimeStatePro
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @TimeStatePro @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
@@ -25,8 +25,7 @@ public class MainActivity extends AppCompatActivity {
     callRecursive();
 
     new Thread(new Runnable() {
-      @TimeStatePro
-      @Override public void run() {
+      @TimeStatePro @Override public void run() {
         try {
           Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -35,11 +34,10 @@ public class MainActivity extends AppCompatActivity {
       }
     }).start();
 
-    //callThrowException();
+    callThrowException();
   }
 
-  @TimeStatePro
-  void callRecursive() {
+  @TimeStatePro void callRecursive() {
     initA();
     initB();
   }
@@ -65,8 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  @TimeStatePro
-  private void callIn100Millis(String s1, String s2, String s3) {
+  @TimeStatePro private void callIn100Millis(String s1, String s2, String s3) {
     function10Millis();
     function20Millis();
     function30Millis();
@@ -105,13 +102,15 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  @TimeStatePro
-  private void callThrowException() {
-    functionThrowException();
+  @TimeStatePro private void callThrowException() {
+    try {
+      functionThrowException();
+    } catch (Exception ignored) {
+    }
   }
 
-  private void functionThrowException() {
+  @TimeStatePro private void functionThrowException() throws IOException {
     function20Millis();
-    throw new AssertionError();
+    throw new IOException();
   }
 }
