@@ -1,0 +1,538 @@
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\n  <component name=\"GradleSettings\">\n    <option name=\"linkedExternalProjectsSettings\">\n      <GradleProjectSettings>\n        <option name=\"testRunner\" value=\"PLATFORM\" />\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\n        <option name=\"modules\">\n          <set>\n            <option value=\"$PROJECT_DIR$\" />\n            <option value=\"$PROJECT_DIR$/app\" />\n            <option value=\"$PROJECT_DIR$/buildSrc\" />\n            <option value=\"$PROJECT_DIR$/plugin\" />\n            <option value=\"$PROJECT_DIR$/time-state-runtime/runtime\" />\n          </set>\n        </option>\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\n      </GradleProjectSettings>\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision dfa05c1343e760686044a1f24589f903073d5c36)
++++ .idea/gradle.xml	(date 1611544290000)
+@@ -17,6 +17,7 @@
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
++        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: .idea/markdown-navigator.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"FlexmarkProjectSettings\">\n    <FlexmarkHtmlSettings flexmarkSpecExampleRendering=\"0\" flexmarkSpecExampleRenderHtml=\"false\">\n      <flexmarkSectionLanguages>\n        <option name=\"1\" value=\"Markdown\" />\n        <option name=\"2\" value=\"HTML\" />\n        <option name=\"3\" value=\"flexmark-ast:1\" />\n      </flexmarkSectionLanguages>\n    </FlexmarkHtmlSettings>\n  </component>\n  <component name=\"MarkdownProjectSettings\">\n    <PreviewSettings splitEditorLayout=\"FIRST\" splitEditorPreview=\"PREVIEW\" useGrayscaleRendering=\"false\" zoomFactor=\"1.0\" maxImageWidth=\"0\" synchronizePreviewPosition=\"true\" highlightPreviewType=\"LINE\" highlightFadeOut=\"5\" highlightOnTyping=\"true\" synchronizeSourcePosition=\"true\" verticallyAlignSourceAndPreviewSyncPosition=\"true\" showSearchHighlightsInPreview=\"true\" showSelectionInPreview=\"true\" lastLayoutSetsDefault=\"false\">\n      <PanelProvider>\n        <provider providerId=\"com.vladsch.md.nav.editor.swing.html.panel\" providerName=\"Default - Swing\" />\n      </PanelProvider>\n    </PreviewSettings>\n    <ParserSettings gitHubSyntaxChange=\"false\" correctedInvalidSettings=\"false\" emojiShortcuts=\"0\" emojiImages=\"0\">\n      <PegdownExtensions>\n        <option name=\"ANCHORLINKS\" value=\"true\" />\n        <option name=\"AUTOLINKS\" value=\"true\" />\n        <option name=\"DEFINITIONS\" value=\"true\" />\n        <option name=\"FENCED_CODE_BLOCKS\" value=\"true\" />\n        <option name=\"INTELLIJ_DUMMY_IDENTIFIER\" value=\"true\" />\n        <option name=\"RELAXEDHRULES\" value=\"true\" />\n        <option name=\"STRIKETHROUGH\" value=\"true\" />\n        <option name=\"TABLES\" value=\"true\" />\n        <option name=\"TASKLISTITEMS\" value=\"true\" />\n        <option name=\"WIKILINKS\" value=\"true\" />\n      </PegdownExtensions>\n      <ParserOptions>\n        <option name=\"GFM_TABLE_RENDERING\" value=\"true\" />\n        <option name=\"GITHUB_WIKI_LINKS\" value=\"true\" />\n        <option name=\"PRODUCTION_SPEC_PARSER\" value=\"true\" />\n      </ParserOptions>\n    </ParserSettings>\n    <HtmlSettings headerTopEnabled=\"false\" headerBottomEnabled=\"false\" bodyTopEnabled=\"false\" bodyBottomEnabled=\"false\" addPageHeader=\"false\" imageUriSerials=\"false\" addDocTypeHtml=\"true\" noParaTags=\"false\" plantUmlConversion=\"0\">\n      <GeneratorProvider>\n        <provider providerId=\"com.vladsch.md.nav.editor.swing.html.generator\" providerName=\"Default Swing HTML Generator\" />\n      </GeneratorProvider>\n      <headerTop />\n      <headerBottom />\n      <bodyTop />\n      <bodyBottom />\n    </HtmlSettings>\n    <CssSettings previewScheme=\"UI_SCHEME\" cssUri=\"\" isCssUriEnabled=\"false\" isCssUriSerial=\"true\" isCssTextEnabled=\"false\" isDynamicPageWidth=\"true\">\n      <StylesheetProvider>\n        <provider providerId=\"com.vladsch.md.nav.editor.swing.html.css\" providerName=\"Default Swing Stylesheet\" />\n      </StylesheetProvider>\n      <ScriptProviders />\n      <cssText />\n      <cssUriHistory />\n    </CssSettings>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/markdown-navigator.xml	(revision dfa05c1343e760686044a1f24589f903073d5c36)
++++ .idea/markdown-navigator.xml	(date 1611544290000)
+@@ -17,7 +17,6 @@
+     </PreviewSettings>
+     <ParserSettings gitHubSyntaxChange="false" correctedInvalidSettings="false" emojiShortcuts="0" emojiImages="0">
+       <PegdownExtensions>
+-        <option name="ANCHORLINKS" value="true" />
+         <option name="AUTOLINKS" value="true" />
+         <option name="DEFINITIONS" value="true" />
+         <option name="FENCED_CODE_BLOCKS" value="true" />
+@@ -34,7 +33,7 @@
+         <option name="PRODUCTION_SPEC_PARSER" value="true" />
+       </ParserOptions>
+     </ParserSettings>
+-    <HtmlSettings headerTopEnabled="false" headerBottomEnabled="false" bodyTopEnabled="false" bodyBottomEnabled="false" addPageHeader="false" imageUriSerials="false" addDocTypeHtml="true" noParaTags="false" plantUmlConversion="0">
++    <HtmlSettings headerTopEnabled="false" headerBottomEnabled="false" bodyTopEnabled="false" bodyBottomEnabled="false" addPageHeader="false" addAnchorLinks="true" anchorLinksWrapText="false" imageUriSerials="false" addDocTypeHtml="true" noParaTags="false" defaultUrlTitle="false" migratedPlantUml="true" migratedAnchorLinks="true" plantUmlConversion="0">
+       <GeneratorProvider>
+         <provider providerId="com.vladsch.md.nav.editor.swing.html.generator" providerName="Default Swing HTML Generator" />
+       </GeneratorProvider>
+@@ -42,6 +41,23 @@
+       <headerBottom />
+       <bodyTop />
+       <bodyBottom />
++      <fencedCodeConversions>
++        <option name="c4plantuml" value="NONE" />
++        <option name="ditaa" value="NONE" />
++        <option name="erd" value="NONE" />
++        <option name="graphviz" value="NONE" />
++        <option name="latex" value="KATEX" />
++        <option name="math" value="KATEX" />
++        <option name="mermaid" value="NONE" />
++        <option name="nomnoml" value="NONE" />
++        <option name="plantuml" value="NONE" />
++        <option name="puml" value="NONE" />
++        <option name="svgbob" value="NONE" />
++        <option name="umlet" value="NONE" />
++        <option name="vega" value="NONE" />
++        <option name="vegalite" value="NONE" />
++        <option name="wavedrom" value="NONE" />
++      </fencedCodeConversions>
+     </HtmlSettings>
+     <CssSettings previewScheme="UI_SCHEME" cssUri="" isCssUriEnabled="false" isCssUriSerial="true" isCssTextEnabled="false" isDynamicPageWidth="true">
+       <StylesheetProvider>
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"CompilerConfiguration\">\n    <annotationProcessing>\n      <profile default=\"true\" name=\"Default\" enabled=\"true\" />\n    </annotationProcessing>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision dfa05c1343e760686044a1f24589f903073d5c36)
++++ .idea/compiler.xml	(date 1611544484000)
+@@ -4,5 +4,6 @@
+     <annotationProcessing>
+       <profile default="true" name="Default" enabled="true" />
+     </annotationProcessing>
++    <bytecodeTargetLevel target="1.8" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/codeStyles/codeStyleConfig.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/codeStyles/codeStyleConfig.xml	(date 1611556749000)
++++ .idea/codeStyles/codeStyleConfig.xml	(date 1611556749000)
+@@ -0,0 +1,5 @@
++<component name="ProjectCodeStyleConfiguration">
++  <state>
++    <option name="PREFERRED_PROJECT_CODE_STYLE" value="SquareAndroid" />
++  </state>
++</component>
+\ No newline at end of file
+Index: time-state-runtime/runtime/src/main/java/com/smartdengg/timestate/runtime/TimeStateLogger.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.smartdengg.timestate.runtime;\n\nimport android.util.Log;\nimport java.util.LinkedList;\nimport java.util.Map;\nimport java.util.Queue;\nimport java.util.concurrent.TimeUnit;\nimport java.util.regex.Matcher;\nimport java.util.regex.Pattern;\n\n/**\n * 创建时间: 2020/03/06 22:54 <br>\n * 作者: dengwei <br>\n * 描述: 记录函数的进入和退出，并打印函数的耗时\n */\n@SuppressWarnings(\"ConstantConditions\") public final class TimeStateLogger {\n\n  private static final Pattern ANONYMOUS_CLASS = Pattern.compile(\"(\\\\$\\\\d+)+$\");\n  private static final ThreadLocal<LinkedList<Method>> threadLocal = new ThreadLocal<>();\n\n  //set by compile\n  private static String TAG;\n\n  public static void entry(boolean isEnclosing, String descriptor) {\n\n    final long time = System.nanoTime();\n\n    final LinkedList<Method> threadMethodStack = getThreadMethodStackOrCreate();\n\n    final String[] res = descriptor.split(\"/\");\n    final String owner = res[0];\n    final String name = res[1];\n    final String arguments = res[2];\n    final String returnType = res[3];\n\n    if (isEnclosing) {// enclosing method entry\n      final Method enclosingMethod = new Method(descriptor, owner, name, arguments, returnType);\n      enclosingMethod.entry = time;\n      threadMethodStack.addFirst(enclosingMethod);\n    } else {\n      final Method method = new Method(descriptor, owner, name, arguments, returnType);\n      method.entry = System.nanoTime();\n      // find enclosing method\n      threadMethodStack.peekFirst().batch(method.getDescriptor(), method);\n    }\n  }\n\n  public static void exit(boolean isEnclosing, String descriptor, String lineNumber) {\n\n    final long time = System.nanoTime();\n\n    final LinkedList<Method> threadMethodStack = getThreadMethodStackOrCreate();\n    final Method enclosingMethod = threadMethodStack.peekFirst();\n    if (isEnclosing) {// enclosing method exit\n      enclosingMethod.exit = time;\n      enclosingMethod.lineNumber = lineNumber;\n    } else {\n      enclosingMethod.find(descriptor).exit = time;\n    }\n  }\n\n  public static void log() {\n\n    Log.d(TAG, DrawToolbox.TOP_BORDER);\n    Log.d(TAG, DrawToolbox.HORIZONTAL_LINE + \" \" + currentThread());\n\n    final Method enclosingMethod = getThreadMethodStackOrCreate().pollFirst();\n    final String className = enclosingMethod.getOwner();\n    String simpleClassName = className.substring(className.lastIndexOf(\".\") + 1);\n    final Matcher matcher = ANONYMOUS_CLASS.matcher(simpleClassName);\n    if (matcher.find()) simpleClassName = matcher.replaceAll(\"\");\n\n    final String enclosingInfo = className\n        + \"#\"\n        + enclosingMethod.getName()\n        + \"(\"\n        + enclosingMethod.getArguments()\n        + \"):\"\n        + enclosingMethod.getReturnType()\n        + \" (\"\n        + simpleClassName\n        + \".java:\"\n        + enclosingMethod.lineNumber\n        + \")\"\n        + \" ===> COST:\"\n        + calculateTime(enclosingMethod.exit - enclosingMethod.entry);\n\n    Log.d(TAG, DrawToolbox.HORIZONTAL_LINE + \" \" + enclosingInfo);\n\n    if (enclosingMethod.hasMethods()) {\n\n      Log.d(TAG, DrawToolbox.MIDDLE_BORDER);\n\n      for (Map.Entry<String, Queue<Method>> entry : enclosingMethod.getCalls().entrySet()) {\n\n        final Queue<Method> methods = entry.getValue();\n        final Method method = methods.poll();\n\n        long cost = method.exit - method.entry;\n        int count = 1;\n        while (!methods.isEmpty()) {\n          Method m = methods.poll();\n          cost += m.exit - m.entry;\n          count++;\n        }\n\n        String info = DrawToolbox.HORIZONTAL_LINE\n            + \"  ____/ \"\n            + method.getOwner()\n            + \"#\"\n            + method.getName()\n            + \"(\"\n            + method.getArguments()\n            + \"):\"\n            + method.getReturnType();\n\n        if (count != 1) {\n          info += \" * \" + count;\n        }\n\n        info += \" ===> COST:\" + calculateTime(cost);\n\n        Log.d(TAG, info);\n      }\n    }\n\n    Log.d(TAG, DrawToolbox.BOTTOM_BORDER);\n  }\n\n  private static Thread currentThread() {\n    return Thread.currentThread();\n  }\n\n  private static String calculateTime(long duration) {\n    if (duration <= 0) {\n      return \"0ms\";\n    } else if (duration >= 1_000_000) {\n      return TimeUnit.NANOSECONDS.toMillis(duration) + \"ms\";\n    } else {\n      return TimeUnit.MICROSECONDS.toMillis(duration) + \"μs\";\n    }\n  }\n\n  private static LinkedList<Method> getThreadMethodStackOrCreate() {\n    LinkedList<Method> currentThreadMethodStack = threadLocal.get();\n    if (currentThreadMethodStack == null) {\n      currentThreadMethodStack = new LinkedList<>();\n      threadLocal.set(currentThreadMethodStack);\n    }\n    return currentThreadMethodStack;\n  }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- time-state-runtime/runtime/src/main/java/com/smartdengg/timestate/runtime/TimeStateLogger.java	(revision 4d11ec342fffa666978b103df244b3d46549ba62)
++++ time-state-runtime/runtime/src/main/java/com/smartdengg/timestate/runtime/TimeStateLogger.java	(date 1611575239000)
+@@ -1,9 +1,10 @@
+ package com.smartdengg.timestate.runtime;
+ 
++import android.os.Build;
++import android.os.Trace;
+ import android.util.Log;
+ import java.util.LinkedList;
+ import java.util.Map;
+-import java.util.Queue;
+ import java.util.concurrent.TimeUnit;
+ import java.util.regex.Matcher;
+ import java.util.regex.Pattern;
+@@ -13,7 +14,7 @@
+  * 作者: dengwei <br>
+  * 描述: 记录函数的进入和退出，并打印函数的耗时
+  */
+-@SuppressWarnings("ConstantConditions") public final class TimeStateLogger {
++public final class TimeStateLogger {
+ 
+   private static final Pattern ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$");
+   private static final ThreadLocal<LinkedList<Method>> threadLocal = new ThreadLocal<>();
+@@ -21,6 +22,12 @@
+   //set by compile
+   private static String TAG;
+ 
++  /**
++   * 函数的进入
++   *
++   * @param isEnclosing 是否为顶层函数调用
++   * @param descriptor 函数描述符，eg: com.smartdengg.timestate.sample.MainActivity/onCreate/android.os.Bundle/void
++   */
+   public static void entry(boolean isEnclosing, String descriptor) {
+ 
+     final long time = System.nanoTime();
+@@ -33,18 +40,23 @@
+     final String arguments = res[2];
+     final String returnType = res[3];
+ 
++    final Method method = new Method(descriptor, owner, name, arguments, returnType);
++    method.entry = time;
++
+     if (isEnclosing) {// enclosing method entry
+-      final Method enclosingMethod = new Method(descriptor, owner, name, arguments, returnType);
+-      enclosingMethod.entry = time;
+-      threadMethodStack.addFirst(enclosingMethod);
+-    } else {
+-      final Method method = new Method(descriptor, owner, name, arguments, returnType);
+-      method.entry = System.nanoTime();
+-      // find enclosing method
+-      threadMethodStack.peekFirst().batch(method.getDescriptor(), method);
++      threadMethodStack.addFirst(method);
++    } else {// find enclosing method
++      threadMethodStack.peekFirst().batchIfNeeded(descriptor, method);
+     }
+   }
+ 
++  /**
++   * 函数的退出
++   *
++   * @param isEnclosing 是否为顶层函数调用
++   * @param descriptor 函数描述符
++   * @param lineNumber 函数调用所在行号，只有顶层函数才会拥有这个值
++   */
+   public static void exit(boolean isEnclosing, String descriptor, String lineNumber) {
+ 
+     final long time = System.nanoTime();
+@@ -64,13 +76,15 @@
+     Log.d(TAG, DrawToolbox.TOP_BORDER);
+     Log.d(TAG, DrawToolbox.HORIZONTAL_LINE + " " + currentThread());
+ 
++    TimeStateLogger.class.getCanonicalName();
++
+     final Method enclosingMethod = getThreadMethodStackOrCreate().pollFirst();
+-    final String className = enclosingMethod.getOwner();
+-    String simpleClassName = className.substring(className.lastIndexOf(".") + 1);
++    final String owner = enclosingMethod.getOwner();
++    String simpleClassName = owner.substring(owner.lastIndexOf(".") + 1);
+     final Matcher matcher = ANONYMOUS_CLASS.matcher(simpleClassName);
+     if (matcher.find()) simpleClassName = matcher.replaceAll("");
+ 
+-    final String enclosingInfo = className
++    final String enclosingInfo = owner
+         + "#"
+         + enclosingMethod.getName()
+         + "("
+@@ -91,18 +105,9 @@
+ 
+       Log.d(TAG, DrawToolbox.MIDDLE_BORDER);
+ 
+-      for (Map.Entry<String, Queue<Method>> entry : enclosingMethod.getCalls().entrySet()) {
++      for (Map.Entry<String, Method> entry : enclosingMethod.getInternalCalls().entrySet()) {
+ 
+-        final Queue<Method> methods = entry.getValue();
+-        final Method method = methods.poll();
+-
+-        long cost = method.exit - method.entry;
+-        int count = 1;
+-        while (!methods.isEmpty()) {
+-          Method m = methods.poll();
+-          cost += m.exit - m.entry;
+-          count++;
+-        }
++        final Method method = entry.getValue();
+ 
+         String info = DrawToolbox.HORIZONTAL_LINE
+             + "  ____/ "
+@@ -114,13 +119,11 @@
+             + "):"
+             + method.getReturnType();
+ 
+-        if (count != 1) {
+-          info += " * " + count;
++        if (method.count > 1) {
++          info += " * " + method.count;
+         }
+ 
+-        info += " ===> COST:" + calculateTime(cost);
+-
+-        Log.d(TAG, info);
++        Log.d(TAG, info + " ===> COST:" + calculateTime(method.exit - method.entry));
+       }
+     }
+ 
+@@ -133,11 +136,11 @@
+ 
+   private static String calculateTime(long duration) {
+     if (duration <= 0) {
+-      return "0ms";
++      return "0 ms";
+     } else if (duration >= 1_000_000) {
+-      return TimeUnit.NANOSECONDS.toMillis(duration) + "ms";
++      return TimeUnit.NANOSECONDS.toMillis(duration) + " ms";
+     } else {
+-      return TimeUnit.MICROSECONDS.toMillis(duration) + "μs";
++      return TimeUnit.MICROSECONDS.toMillis(duration) + " μs";
+     }
+   }
+ 
+@@ -149,4 +152,16 @@
+     }
+     return currentThreadMethodStack;
+   }
++
++  private static void beginTrace(String sectionName) {
++    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
++      Trace.beginSection(sectionName);
++    }
++  }
++
++  private static void endSection() {
++    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
++      Trace.endSection();
++    }
++  }
+ }
+Index: time-state-runtime/runtime/src/main/java/com/smartdengg/timestate/runtime/Method.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.smartdengg.timestate.runtime;\n\nimport java.util.LinkedHashMap;\nimport java.util.LinkedList;\nimport java.util.Map;\nimport java.util.Queue;\n\n/**\n * 创建时间: 2020/03/06 22:58 <br>\n * 作者: dengwei <br>\n * 描述: 记录调用函数的信息\n */\nclass Method {\n\n  String lineNumber;// only the enclose method has\n  long entry;\n  long exit;\n  private String descriptor;\n  private String owner;\n  private String name;\n  private String arguments;\n  private String returnType;\n  private Map<String, Queue<Method>> calls = new LinkedHashMap<>();\n\n  Method(String descriptor, String owner, String name, String arguments, String returnType) {\n    this.descriptor = descriptor;\n    this.owner = owner;\n    this.name = name;\n    this.arguments = arguments;\n    this.returnType = returnType;\n  }\n\n  void batch(String descriptor, Method method) {\n    Queue<Method> sequence = calls.get(descriptor);\n    if (sequence == null) {\n      sequence = new LinkedList<>();\n      calls.put(descriptor, sequence);\n    }\n    sequence.offer(method);\n  }\n\n  Method find(String descriptor) {\n    //noinspection ConstantConditions\n    return ((LinkedList<Method>) calls.get(descriptor)).peekLast();\n  }\n\n  Map<String, Queue<Method>> getCalls() {\n    return calls;\n  }\n\n  String getDescriptor() {\n    return descriptor;\n  }\n\n  String getOwner() {\n    return owner;\n  }\n\n  String getName() {\n    return name;\n  }\n\n  String getArguments() {\n    return arguments;\n  }\n\n  String getReturnType() {\n    return returnType;\n  }\n\n  boolean hasMethods() {\n    return calls.size() != 0;\n  }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- time-state-runtime/runtime/src/main/java/com/smartdengg/timestate/runtime/Method.java	(revision 4d11ec342fffa666978b103df244b3d46549ba62)
++++ time-state-runtime/runtime/src/main/java/com/smartdengg/timestate/runtime/Method.java	(date 1611575096000)
+@@ -1,9 +1,8 @@
+ package com.smartdengg.timestate.runtime;
+ 
++import java.util.HashMap;
+ import java.util.LinkedHashMap;
+-import java.util.LinkedList;
+ import java.util.Map;
+-import java.util.Queue;
+ 
+ /**
+  * 创建时间: 2020/03/06 22:58 <br>
+@@ -12,15 +11,16 @@
+  */
+ class Method {
+ 
++  private final String descriptor;
++  private final String owner;
++  private final String name;
++  private final String arguments;
++  private final String returnType;
++  private final Map<String, Method> internalCalls = new LinkedHashMap<>();
+   String lineNumber;// only the enclose method has
+   long entry;
+   long exit;
+-  private String descriptor;
+-  private String owner;
+-  private String name;
+-  private String arguments;
+-  private String returnType;
+-  private Map<String, Queue<Method>> calls = new LinkedHashMap<>();
++  int count = 1;
+ 
+   Method(String descriptor, String owner, String name, String arguments, String returnType) {
+     this.descriptor = descriptor;
+@@ -30,22 +30,21 @@
+     this.returnType = returnType;
+   }
+ 
+-  void batch(String descriptor, Method method) {
+-    Queue<Method> sequence = calls.get(descriptor);
+-    if (sequence == null) {
+-      sequence = new LinkedList<>();
+-      calls.put(descriptor, sequence);
++  void batchIfNeeded(String descriptor, Method method) {
++    final Method bathedMethod = internalCalls.get(descriptor);
++    if (bathedMethod == null) {
++      internalCalls.put(descriptor, method);
++    } else {
++      bathedMethod.count++;
+     }
+-    sequence.offer(method);
+   }
+ 
+   Method find(String descriptor) {
+-    //noinspection ConstantConditions
+-    return ((LinkedList<Method>) calls.get(descriptor)).peekLast();
++    return internalCalls.get(descriptor);
+   }
+ 
+-  Map<String, Queue<Method>> getCalls() {
+-    return calls;
++  Map<String, Method> getInternalCalls() {
++    return internalCalls;
+   }
+ 
+   String getDescriptor() {
+@@ -69,6 +68,10 @@
+   }
+ 
+   boolean hasMethods() {
+-    return calls.size() != 0;
++    return internalCalls.size() != 0;
++  }
++
++  public int getCount() {
++    return count;
+   }
+ }
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/jarRepositories.xml	(date 1611544578000)
++++ .idea/jarRepositories.xml	(date 1611544578000)
+@@ -0,0 +1,35 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RemoteRepositoriesConfiguration">
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Maven Central repository" />
++      <option name="url" value="https://repo1.maven.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="jboss.community" />
++      <option name="name" value="JBoss Community repository" />
++      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="BintrayJCenter" />
++      <option name="name" value="BintrayJCenter" />
++      <option name="url" value="https://jcenter.bintray.com/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="Google" />
++      <option name="name" value="Google" />
++      <option name="url" value="https://dl.google.com/dl/android/maven2/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="maven" />
++      <option name="name" value="maven" />
++      <option name="url" value="https://jitpack.io" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="MavenRepo" />
++      <option name="name" value="MavenRepo" />
++      <option name="url" value="https://repo.maven.apache.org/maven2/" />
++    </remote-repository>
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/java/com/smartdengg/timestate/sample/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/smartdengg/timestate/sample/Main.java	(date 1611563353000)
++++ app/src/main/java/com/smartdengg/timestate/sample/Main.java	(date 1611563353000)
+@@ -0,0 +1,12 @@
++package com.smartdengg.timestate.sample;
++
++public class Main {
++
++  private void test1() {
++    print(new String[] { "oh", "my", "god" }, "say", "hello", "world");
++  }
++
++  private void print(String[] names, String... strings) {
++
++  }
++}
+Index: .idea/dictionaries/bytedance.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/dictionaries/bytedance.xml	(date 1611575217000)
++++ .idea/dictionaries/bytedance.xml	(date 1611575217000)
+@@ -0,0 +1,7 @@
++<component name="ProjectDictionaryState">
++  <dictionary name="bytedance">
++    <words>
++      <w>lcom</w>
++    </words>
++  </dictionary>
++</component>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ASMIdeaPluginConfiguration\">\n    <asm skipDebug=\"false\" skipFrames=\"false\" skipCode=\"false\" expandFrames=\"false\" />\n    <groovy codeStyle=\"LEGACY\" />\n  </component>\n  <component name=\"ASMPluginConfiguration\">\n    <asm skipDebug=\"false\" skipFrames=\"false\" skipCode=\"false\" expandFrames=\"false\" />\n    <groovy codeStyle=\"LEGACY\" />\n  </component>\n  <component name=\"CMakeSettings\">\n    <configurations>\n      <configuration PROFILE_NAME=\"Debug\" CONFIG_NAME=\"Debug\" />\n    </configurations>\n  </component>\n  <component name=\"ProjectInspectionProfilesVisibleTreeState\">\n    <entry key=\"Project Default\">\n      <profile-state>\n        <expanded-state>\n          <State>\n            <id />\n          </State>\n          <State>\n            <id>Android &gt; Lint &gt; Correctness</id>\n          </State>\n          <State>\n            <id>Android &gt; Lint &gt; Performance</id>\n          </State>\n          <State>\n            <id>Class structureJava</id>\n          </State>\n          <State>\n            <id>Cloning issuesJava</id>\n          </State>\n          <State>\n            <id>Groovy</id>\n          </State>\n          <State>\n            <id>Inheritance issuesJava</id>\n          </State>\n          <State>\n            <id>Internationalization issuesJava</id>\n          </State>\n          <State>\n            <id>Java</id>\n          </State>\n          <State>\n            <id>Numeric issuesJava</id>\n          </State>\n          <State>\n            <id>Performance issuesJava</id>\n          </State>\n          <State>\n            <id>Potentially confusing code constructsGroovy</id>\n          </State>\n          <State>\n            <id>Probable bugsJava</id>\n          </State>\n          <State>\n            <id>Security issuesJava</id>\n          </State>\n          <State>\n            <id>Serialization issuesJava</id>\n          </State>\n          <State>\n            <id>Threading issuesJava</id>\n          </State>\n        </expanded-state>\n        <selected-state>\n          <State>\n            <id>Android</id>\n          </State>\n        </selected-state>\n      </profile-state>\n    </entry>\n  </component>\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_7\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\n  </component>\n  <component name=\"ProjectType\">\n    <option name=\"id\" value=\"Android\" />\n  </component>\n  <component name=\"masterDetails\">\n    <states>\n      <state key=\"ScopeChooserConfigurable.UI\">\n        <settings>\n          <splitter-proportions>\n            <option name=\"proportions\">\n              <list>\n                <option value=\"0.2\" />\n              </list>\n            </option>\n          </splitter-proportions>\n        </settings>\n      </state>\n    </states>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision dfa05c1343e760686044a1f24589f903073d5c36)
++++ .idea/misc.xml	(date 1611544484000)
+@@ -74,7 +74,7 @@
+       </profile-state>
+     </entry>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: plugin/src/main/groovy/com/smartdengg/timestate/plugin/TimeStateGradlePlugin.groovy
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.smartdengg.timestate.plugin\n\nimport com.android.build.gradle.*\nimport groovy.util.logging.Slf4j\nimport org.gradle.api.GradleException\nimport org.gradle.api.Plugin\nimport org.gradle.api.Project\n\n@Slf4j\nclass TimeStateGradlePlugin implements Plugin<Project> {\n\n  @Override void apply(Project project) {\n\n    def androidPlugin = [AppPlugin, LibraryPlugin, FeaturePlugin]\n        .collect { project.plugins.findPlugin(it) as BasePlugin }\n        .find { it != null }\n\n    log.debug('Found Plugin: {}', androidPlugin)\n\n    if (!androidPlugin) {\n      throw new GradleException(\n          \"'com.android.application' or 'com.android.library' or 'com.android.feature' plugin required.\")\n    }\n\n    project.repositories.maven {\n      url \"https://jitpack.io\"\n    }\n\n    println()\n    ColoredLogger.logBlue('#### 欢迎使用 TimeState 编译插件，任何疑问请联系 hi4joker@gmail.com ####')\n    println()\n\n    project.dependencies {\n      implementation 'com.github.SmartDengg:method-time-state-runtime:1.2.0'\n    }\n\n    //    project.configurations.implementation.dependencies.add(project.dependencies.create(\n    //        project.rootProject.findProject(\"time-state-runtime\")))\n\n    project.extensions[\"${TimeStateSetting.NAME}\"] = project.objects.newInstance(TimeStateSetting)\n\n    def extension = project.extensions.getByName(\"android\") as BaseExtension\n    extension.registerTransform(new TimeStateTransform(project))\n  }\n}\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- plugin/src/main/groovy/com/smartdengg/timestate/plugin/TimeStateGradlePlugin.groovy	(revision dfa05c1343e760686044a1f24589f903073d5c36)
++++ plugin/src/main/groovy/com/smartdengg/timestate/plugin/TimeStateGradlePlugin.groovy	(date 1611557623000)
+@@ -30,12 +30,12 @@
+     ColoredLogger.logBlue('#### 欢迎使用 TimeState 编译插件，任何疑问请联系 hi4joker@gmail.com ####')
+     println()
+ 
+-    project.dependencies {
+-      implementation 'com.github.SmartDengg:method-time-state-runtime:1.2.0'
+-    }
++    //    project.dependencies {
++    //      implementation 'com.github.SmartDengg:method-time-state-runtime:1.2.0'
++    //    }
+ 
+-    //    project.configurations.implementation.dependencies.add(project.dependencies.create(
+-    //        project.rootProject.findProject("time-state-runtime")))
++    project.configurations.implementation.dependencies.add(project.dependencies.create(
++        project.rootProject.findProject("time-state-runtime")))
+ 
+     project.extensions["${TimeStateSetting.NAME}"] = project.objects.newInstance(TimeStateSetting)
+ 
+Index: app/src/main/java/com/smartdengg/timestate/sample/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.smartdengg.timestate.sample;\n\nimport android.os.Bundle;\nimport android.widget.TextView;\nimport androidx.appcompat.app.AppCompatActivity;\nimport com.smartdengg.timestate.runtime.TimeStatePro;\nimport java.util.concurrent.atomic.AtomicBoolean;\n\npublic class MainActivity extends AppCompatActivity {\n\n  private AtomicBoolean initAOnce = new AtomicBoolean(false);\n  private AtomicBoolean initBOnce = new AtomicBoolean(false);\n\n  @TimeStatePro\n  @Override protected void onCreate(Bundle savedInstanceState) {\n    super.onCreate(savedInstanceState);\n    setContentView(R.layout.activity_main);\n\n    for (int i = 0, n = 1000; i < n; i++) {\n      TextView textView = new TextView(this);\n    }\n\n    callIn100Millis(\"1\", \"2\", \"3\");\n\n    callRecursive();\n\n    new Thread(new Runnable() {\n      @TimeStatePro\n      @Override public void run() {\n        try {\n          Thread.sleep(2000);\n        } catch (InterruptedException e) {\n          e.printStackTrace();\n        }\n      }\n    }).start();\n\n    //callThrowException();\n  }\n\n  @TimeStatePro\n  void callRecursive() {\n    initA();\n    initB();\n  }\n\n  private void initA() {\n    if (initAOnce.compareAndSet(false, true)) {\n      try {\n        Thread.sleep(100);\n      } catch (InterruptedException e) {\n        e.printStackTrace();\n      }\n      callRecursive();\n    }\n  }\n\n  private void initB() {\n    if (initBOnce.compareAndSet(false, true)) {\n      try {\n        Thread.sleep(500);\n      } catch (InterruptedException e) {\n        e.printStackTrace();\n      }\n    }\n  }\n\n  @TimeStatePro\n  private void callIn100Millis(String s1, String s2, String s3) {\n    function10Millis();\n    function20Millis();\n    function30Millis();\n    function40Millis();\n  }\n\n  void function10Millis() {\n    try {\n      Thread.sleep(10);\n    } catch (InterruptedException e) {\n      e.printStackTrace();\n    }\n  }\n\n  void function20Millis() {\n    try {\n      Thread.sleep(20);\n    } catch (InterruptedException e) {\n      e.printStackTrace();\n    }\n  }\n\n  void function30Millis() {\n    try {\n      Thread.sleep(30);\n    } catch (InterruptedException e) {\n      e.printStackTrace();\n    }\n  }\n\n  void function40Millis() {\n    try {\n      Thread.sleep(40);\n    } catch (InterruptedException e) {\n      e.printStackTrace();\n    }\n  }\n\n  @TimeStatePro\n  private void callThrowException() {\n    functionThrowException();\n  }\n\n  private void functionThrowException() {\n    function20Millis();\n    throw new AssertionError();\n  }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/smartdengg/timestate/sample/MainActivity.java	(revision dfa05c1343e760686044a1f24589f903073d5c36)
++++ app/src/main/java/com/smartdengg/timestate/sample/MainActivity.java	(date 1611574835000)
+@@ -8,16 +8,16 @@
+ 
+ public class MainActivity extends AppCompatActivity {
+ 
+-  private AtomicBoolean initAOnce = new AtomicBoolean(false);
+-  private AtomicBoolean initBOnce = new AtomicBoolean(false);
++  private final AtomicBoolean initAOnce = new AtomicBoolean(false);
++  private final AtomicBoolean initBOnce = new AtomicBoolean(false);
+ 
+   @TimeStatePro
+   @Override protected void onCreate(Bundle savedInstanceState) {
+     super.onCreate(savedInstanceState);
+     setContentView(R.layout.activity_main);
+ 
+-    for (int i = 0, n = 1000; i < n; i++) {
+-      TextView textView = new TextView(this);
++    for (int i = 0, n = 20; i < n; i++) {
++      createTextViewIn10ms();
+     }
+ 
+     callIn100Millis("1", "2", "3");
+@@ -38,6 +38,15 @@
+     //callThrowException();
+   }
+ 
++  private void createTextViewIn10ms() {
++    try {
++      //TextView textView = new TextView(this);
++      Thread.sleep(10);
++    } catch (InterruptedException e) {
++      e.printStackTrace();
++    }
++  }
++
+   @TimeStatePro
+   void callRecursive() {
+     initA();
+Index: .idea/codeStyles/Project.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><component name=\"ProjectCodeStyleConfiguration\">\n  <code_scheme name=\"Project\" version=\"173\">\n    <codeStyleSettings language=\"XML\">\n      <arrangement>\n        <rules>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>xmlns:android</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>^$</XML_NAMESPACE>\n                </AND>\n              </match>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>xmlns:.*</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>^$</XML_NAMESPACE>\n                </AND>\n              </match>\n              <order>BY_NAME</order>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>.*:id</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>\n                </AND>\n              </match>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>.*:name</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>\n                </AND>\n              </match>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>name</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>^$</XML_NAMESPACE>\n                </AND>\n              </match>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>style</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>^$</XML_NAMESPACE>\n                </AND>\n              </match>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>.*</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>^$</XML_NAMESPACE>\n                </AND>\n              </match>\n              <order>BY_NAME</order>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>.*</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>http://schemas.android.com/apk/res/android</XML_NAMESPACE>\n                </AND>\n              </match>\n              <order>ANDROID_ATTRIBUTE_ORDER</order>\n            </rule>\n          </section>\n          <section>\n            <rule>\n              <match>\n                <AND>\n                  <NAME>.*</NAME>\n                  <XML_ATTRIBUTE />\n                  <XML_NAMESPACE>.*</XML_NAMESPACE>\n                </AND>\n              </match>\n              <order>BY_NAME</order>\n            </rule>\n          </section>\n        </rules>\n      </arrangement>\n    </codeStyleSettings>\n  </code_scheme>\n</component>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/codeStyles/Project.xml	(revision dfa05c1343e760686044a1f24589f903073d5c36)
++++ .idea/codeStyles/Project.xml	(date 1611556749000)
+@@ -1,5 +1,8 @@
+ <component name="ProjectCodeStyleConfiguration">
+   <code_scheme name="Project" version="173">
++    <MarkdownNavigatorCodeStyleSettings>
++      <option name="RIGHT_MARGIN" value="72" />
++    </MarkdownNavigatorCodeStyleSettings>
+     <codeStyleSettings language="XML">
+       <arrangement>
+         <rules>
