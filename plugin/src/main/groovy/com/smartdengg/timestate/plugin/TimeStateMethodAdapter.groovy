@@ -18,17 +18,15 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
   private final String methodArguments
   private final String methodReturn
   private final String encloseDescriptor
-  private final List<String> measuredMethodInfo
+  private final List<String> tracedMethods
 
-  private boolean hasTimeStateAnnotation
-  private boolean hasTimeStateProAnnotation
-  private boolean hasTimeTracedAnnotation
   private boolean isWoven
   private int methodEntryLineNumber = UNKNOWN_LINENUMBER
   private int count
+  private PreCheckMethodVisitor preCheckMethodVisitor
 
   TimeStateMethodAdapter(MethodVisitor mv, String className, String methodName, String desc,
-      List<String> measuredMethodInfo) {
+      List<String> tracedMethods) {
     //noinspection UnnecessaryQualifiedReference
     super(Opcodes.ASM6, mv)
     this.className = className.replace("/", '.')
@@ -36,40 +34,30 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
     this.methodDesc = desc
     this.methodArguments = getArguments(methodDesc)
     this.methodReturn = getReturnType(methodDesc)
-    this.measuredMethodInfo = measuredMethodInfo
+    this.tracedMethods = tracedMethods
     this.encloseDescriptor =
         getDescriptor(this.className, this.methodName, this.methodArguments, this.methodReturn)
   }
 
-  @Override /*①*/
-  AnnotationVisitor visitAnnotation(String desc, boolean visible) {
-    hasTimeStateAnnotation |= desc == Constants.timeStateDesc
-    hasTimeStateProAnnotation |= desc == Constants.timeStateProDesc
-    hasTimeTracedAnnotation |= desc == Constants.timeTracedDesc
-    return super.visitAnnotation(desc, visible)
-  }
-
   @Override /*②*/
   void visitCode() {
-    if (hasAnyTimeStateAnnotation()) {
-      count++
-      addTimedAnnotation()
-      addTimeStateCodeBlock(className, methodName, methodDesc, null, true, false)
-    }
     super.visitCode()
+    count++
+    addTimedAnnotation()
+    addTimeStateCodeBlock(className, methodName, methodDesc, null, true, false)
   }
 
   @Override /*③*/
   void visitLineNumber(int line, Label start) {
-    if (hasAnyTimeStateAnnotation()) {
-      if (methodEntryLineNumber == UNKNOWN_LINENUMBER) methodEntryLineNumber = line
-    }
     super.visitLineNumber(line, start)
+    if (methodEntryLineNumber == UNKNOWN_LINENUMBER) {
+      methodEntryLineNumber = line
+    }
   }
 
   @Override
   void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
-    boolean shouldWave = hasTimeStateProAnnotation() && owner != Constants.timeStateLoggerOwner
+    boolean shouldWave = preCheckMethodVisitor.hasTimeStateProAnnotation()
     if (shouldWave) {
       count++
       addTimedAnnotation()
@@ -83,12 +71,10 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
 
   @Override /*④*/
   void visitInsn(int opcode) {
-    if (hasAnyTimeStateAnnotation()) {
-      if (opcode == ATHROW || opcode >= IRETURN && opcode <= RETURN) {
-        addTimeStateCodeBlock(className, methodName, methodDesc,
-            String.valueOf(methodEntryLineNumber), false, true)
-        addTimeStateLogBlock()
-      }
+    if (opcode == ATHROW || opcode >= IRETURN && opcode <= RETURN) {
+      addTimeStateCodeBlock(className, methodName, methodDesc,
+          String.valueOf(methodEntryLineNumber), false, true)
+      addTimeStateLogBlock()
     }
     super.visitInsn(opcode)
   }
@@ -97,7 +83,7 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
   void visitEnd() {
     super.visitEnd()
     if (isWoven) {
-      measuredMethodInfo.add(methodReturn + " " + methodName + "(" + methodArguments + ")")
+      tracedMethods.add(methodReturn + " " + methodName + "(" + methodArguments + ")")
     }
   }
 
@@ -105,21 +91,21 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
       boolean enter, boolean exit) {
     String methodDescriptor = getDescriptor(owner, name, getArguments(desc), getReturnType(desc))
     if (methodDescriptor == encloseDescriptor) {
-      visitInsn(ICONST_1)
+      mv.visitInsn(ICONST_1)
     } else {
-      visitInsn(ICONST_0)
+      mv.visitInsn(ICONST_0)
     }
-    visitLdcInsn(methodDescriptor)
+    mv.visitLdcInsn(methodDescriptor)
     if (enter) {
-      visitMethodInsn(INVOKESTATIC,
+      mv.visitMethodInsn(INVOKESTATIC,
           Constants.timeStateLoggerOwner,
           Constants.timeStateLoggerEntryMethodName,
           Constants.timeStateLoggerEntryMethodDesc,
           false)
     } else if (exit) {
       // 不使用 ACONST_NULL 的原因是: 它将生成两条指令 aconst_null 和 checkcast，不够简洁
-      visitLdcInsn(lineNumber == null ? '' : lineNumber)
-      visitMethodInsn(INVOKESTATIC,
+      mv.visitLdcInsn(lineNumber == null ? '' : lineNumber)
+      mv.visitMethodInsn(INVOKESTATIC,
           Constants.timeStateLoggerOwner,
           Constants.timeStateLoggerExitMethodName,
           Constants.timeStateLoggerExitMethodDesc,
@@ -128,7 +114,7 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
   }
 
   private void addTimeStateLogBlock() {
-    visitMethodInsn(INVOKESTATIC,
+    mv.visitMethodInsn(INVOKESTATIC,
         Constants.timeStateLoggerOwner,
         Constants.timeStateLoggerLogMethodName,
         Constants.timeStateLoggerLogMethodDesc,
@@ -147,8 +133,7 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
 
   @NotNull
   private static String getReturnType(String methodDesc) {
-    Type returnType = Type.getReturnType(methodDesc)
-    return returnType.className
+    return Type.getReturnType(methodDesc).className
   }
 
   private void addTimedAnnotation() {
@@ -159,16 +144,12 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
     }
   }
 
-  private boolean hasAnyTimeStateAnnotation() {
-    return (hasTimeStateAnnotation || hasTimeStateProAnnotation) && !hasTimeTracedAnnotation
-  }
-
-  private boolean hasTimeStateProAnnotation() {
-    return hasTimeStateProAnnotation && !hasTimeTracedAnnotation
-  }
-
   private static String getDescriptor(String owner, String name, String arguments,
       String returnType) {
     return "${owner}/${name}/${arguments}/$returnType"
+  }
+
+  void setPreCheckMethodVisitor(PreCheckMethodVisitor preCheckMethodVisitor) {
+    this.preCheckMethodVisitor = preCheckMethodVisitor
   }
 }

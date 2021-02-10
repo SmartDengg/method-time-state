@@ -3,6 +3,7 @@ package com.smartdengg.timestate.plugin
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
+import org.objectweb.asm.tree.MethodNode
 
 /**
  * 创建时间:  2019/09/25 17:58 <br>
@@ -12,7 +13,7 @@ import org.objectweb.asm.Opcodes
 class TimeStateClassAdapter extends ClassVisitor implements Opcodes {
 
   String className
-  List<String> measuredMethodInfo = []
+  List<String> tracedMethods = []
 
   TimeStateClassAdapter(ClassVisitor classVisitor) {
     //noinspection UnnecessaryQualifiedReference
@@ -30,13 +31,18 @@ class TimeStateClassAdapter extends ClassVisitor implements Opcodes {
   MethodVisitor visitMethod(int access, final String name, String desc, String signature,
       String[] exceptions) {
 
-    MethodVisitor methodVisitor = cv.visitMethod(access, name, desc, signature, exceptions)
+    MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions)
 
-    if (methodVisitor != null) {
-      methodVisitor =
-          new TimeStateMethodAdapter(methodVisitor, className, name, desc, measuredMethodInfo)
+    //    methodNode.accept(visitor)
+
+    if (mv != null) {
+      TimeStateMethodAdapter timeStateMethodAdapter = new TimeStateMethodAdapter(mv, className,
+          name, desc, tracedMethods)
+      MethodVisitor methodTraceVisitor = new PreCheckMethodVisitor(
+          new MethodNode(access, name, desc, signature, exceptions), timeStateMethodAdapter, mv)
+      return methodTraceVisitor
     }
 
-    return methodVisitor
+    return mv
   }
 }

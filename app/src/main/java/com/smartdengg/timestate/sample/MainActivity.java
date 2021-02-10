@@ -113,4 +113,13 @@ public class MainActivity extends AppCompatActivity {
     function20Millis();
     throw new IOException();
   }
+
+  @TimeStatePro
+  private void empty() {
+  }
+
+  @TimeStatePro
+  private int onlyReturn() {
+    return 1;
+  }
 }

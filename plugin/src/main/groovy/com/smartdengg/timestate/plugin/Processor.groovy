@@ -76,14 +76,14 @@ class Processor {
   private static byte[] visitAndReturnBytecode(byte[] originBytes) {
 
     ClassReader classReader = new ClassReader(originBytes)
-    ClassWriter classWriter = new ClassWriter(classReader, 0)
+    ClassWriter classWriter = new ClassWriter(0)
     ClassVisitor timeStateClassAdapter = new TimeStateClassAdapter(new TAGClassAdapter(classWriter))
     classReader.accept(timeStateClassAdapter, ClassReader.EXPAND_FRAMES)
 
-    List<String> tracedMethodInfo = timeStateClassAdapter.measuredMethodInfo
-    if (tracedMethodInfo != null && tracedMethodInfo.size() > 0) {
+    List<String> tracedMethods = timeStateClassAdapter.tracedMethods
+    if (tracedMethods != null && tracedMethods.size() > 0) {
       ColoredLogger.logYellow("[TimeState] ${timeStateClassAdapter.className.replace('/', '.')}: ")
-      for (String method : tracedMethodInfo) {
+      for (String method : tracedMethods) {
         ColoredLogger.logYellow("   --> $method")
       }
     }
