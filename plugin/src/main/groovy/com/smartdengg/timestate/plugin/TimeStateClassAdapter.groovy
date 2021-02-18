@@ -13,7 +13,7 @@ import org.objectweb.asm.tree.MethodNode
 class TimeStateClassAdapter extends ClassVisitor implements Opcodes {
 
   String className
-  List<String> tracedMethods = []
+  List<String> methods = []
 
   TimeStateClassAdapter(ClassVisitor classVisitor) {
     //noinspection UnnecessaryQualifiedReference
@@ -30,19 +30,13 @@ class TimeStateClassAdapter extends ClassVisitor implements Opcodes {
   @Override
   MethodVisitor visitMethod(int access, final String name, String desc, String signature,
       String[] exceptions) {
-
     MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions)
-
-    //    methodNode.accept(visitor)
-
     if (mv != null) {
-      TimeStateMethodAdapter timeStateMethodAdapter = new TimeStateMethodAdapter(mv, className,
-          name, desc, tracedMethods)
-      MethodVisitor methodTraceVisitor = new PreCheckMethodVisitor(
-          new MethodNode(access, name, desc, signature, exceptions), timeStateMethodAdapter, mv)
-      return methodTraceVisitor
+      MethodVisitor preCheckMethodVisitor = new PreCheckMethodVisitor(
+          new MethodNode(access, name, desc, signature, exceptions),
+          new TimeStateMethodAdapter(mv, className, name, desc, methods), mv)
+      return preCheckMethodVisitor
     }
-
     return mv
   }
 }

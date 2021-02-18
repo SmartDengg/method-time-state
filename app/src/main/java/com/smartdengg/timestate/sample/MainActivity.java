@@ -114,12 +114,12 @@ public class MainActivity extends AppCompatActivity {
     throw new IOException();
   }
 
-  @TimeStatePro
+  @TimeStatePro // not log
   private void empty() {
   }
 
-  @TimeStatePro
-  private int onlyReturn() {
+  @TimeStatePro // not log
+  private int get() {
     return 1;
   }
 }

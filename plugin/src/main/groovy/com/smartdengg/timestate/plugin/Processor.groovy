@@ -80,10 +80,10 @@ class Processor {
     ClassVisitor timeStateClassAdapter = new TimeStateClassAdapter(new TAGClassAdapter(classWriter))
     classReader.accept(timeStateClassAdapter, ClassReader.EXPAND_FRAMES)
 
-    List<String> tracedMethods = timeStateClassAdapter.tracedMethods
-    if (tracedMethods != null && tracedMethods.size() > 0) {
+    List<String> methods = timeStateClassAdapter.methods
+    if (methods != null && methods.size() > 0) {
       ColoredLogger.logYellow("[TimeState] ${timeStateClassAdapter.className.replace('/', '.')}: ")
-      for (String method : tracedMethods) {
+      for (String method : methods) {
         ColoredLogger.logYellow("   --> $method")
       }
     }

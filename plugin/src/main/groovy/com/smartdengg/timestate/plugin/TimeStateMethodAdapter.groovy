@@ -39,7 +39,7 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
         getDescriptor(this.className, this.methodName, this.methodArguments, this.methodReturn)
   }
 
-  @Override /*②*/
+  @Override
   void visitCode() {
     super.visitCode()
     count++
@@ -47,7 +47,7 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
     addTimeStateCodeBlock(className, methodName, methodDesc, null, true, false)
   }
 
-  @Override /*③*/
+  @Override
   void visitLineNumber(int line, Label start) {
     super.visitLineNumber(line, start)
     if (methodEntryLineNumber == UNKNOWN_LINENUMBER) {
@@ -57,19 +57,19 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
 
   @Override
   void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
-    boolean shouldWave = preCheckMethodVisitor.hasTimeStateProAnnotation()
-    if (shouldWave) {
+    boolean isPro = preCheckMethodVisitor.hasTimeStateProAnnotation()
+    if (isPro) {
       count++
       addTimedAnnotation()
       addTimeStateCodeBlock(owner.replace("/", '.'), name, desc, null, true, false)
     }
     super.visitMethodInsn(opcode, owner, name, desc, itf)
-    if (shouldWave) {
+    if (isPro) {
       addTimeStateCodeBlock(owner.replace("/", '.'), name, desc, null, false, true)
     }
   }
 
-  @Override /*④*/
+  @Override
   void visitInsn(int opcode) {
     if (opcode == ATHROW || opcode >= IRETURN && opcode <= RETURN) {
       addTimeStateCodeBlock(className, methodName, methodDesc,
@@ -131,7 +131,6 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
     return arguments.join(';')
   }
 
-  @NotNull
   private static String getReturnType(String methodDesc) {
     return Type.getReturnType(methodDesc).className
   }
