@@ -1,6 +1,7 @@
 package com.smartdengg.timestate.plugin
 
 import com.android.build.gradle.*
+import com.android.build.gradle.api.BaseVariant
 import groovy.util.logging.Slf4j
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
@@ -12,14 +13,14 @@ class TimeStateGradlePlugin implements Plugin<Project> {
   @Override void apply(Project project) {
 
     def androidPlugin = [AppPlugin, LibraryPlugin, FeaturePlugin]
-        .collect { project.plugins.findPlugin(it) as BasePlugin }
-        .find { it != null }
+            .collect { project.plugins.findPlugin(it) as BasePlugin }
+            .find { it != null }
 
     log.debug('Found Plugin: {}', androidPlugin)
 
     if (!androidPlugin) {
       throw new GradleException(
-          "'com.android.application' or 'com.android.library' or 'com.android.feature' plugin required.")
+              "'com.android.application' or 'com.android.library' or 'com.android.feature' plugin required.")
     }
 
     project.repositories.maven {
@@ -35,7 +36,7 @@ class TimeStateGradlePlugin implements Plugin<Project> {
     //    }
 
     project.configurations.implementation.dependencies.add(project.dependencies.create(
-        project.rootProject.findProject("time-state-runtime")))
+            project.rootProject.findProject("time-state-runtime")))
 
     project.extensions["${TimeStateSetting.NAME}"] = project.objects.newInstance(TimeStateSetting)
 

@@ -15,7 +15,7 @@ class PreCheckMethodVisitor extends MethodVisitor {
 
   PreCheckMethodVisitor(MethodNode methodNode, TimeStateMethodAdapter timeStateMethodAdapter,
       MethodVisitor originMethodVisitor) {
-    super(Opcodes.ASM6, methodNode)
+    super(Opcodes.ASM7, methodNode)
     this.methodNode = methodNode
     this.timeStateMethodAdapter = timeStateMethodAdapter
     this.timeStateMethodAdapter.setPreCheckMethodVisitor(this)

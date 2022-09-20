@@ -17,7 +17,7 @@ class TimeStateClassAdapter extends ClassVisitor implements Opcodes {
 
   TimeStateClassAdapter(ClassVisitor classVisitor) {
     //noinspection UnnecessaryQualifiedReference
-    super(Opcodes.ASM6, classVisitor)
+    super(Opcodes.ASM7, classVisitor)
   }
 
   @Override

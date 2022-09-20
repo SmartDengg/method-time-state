@@ -28,15 +28,14 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
   TimeStateMethodAdapter(MethodVisitor mv, String className, String methodName, String desc,
       List<String> tracedMethods) {
     //noinspection UnnecessaryQualifiedReference
-    super(Opcodes.ASM6, mv)
+    super(Opcodes.ASM7, mv)
     this.className = className.replace("/", '.')
     this.methodName = methodName
     this.methodDesc = desc
-    this.methodArguments = getArguments(methodDesc)
-    this.methodReturn = getReturnType(methodDesc)
+    this.methodArguments = getLastPart(getArguments(methodDesc))
+    this.methodReturn = getLastPart(getReturnType(methodDesc))
     this.tracedMethods = tracedMethods
-    this.encloseDescriptor =
-        getDescriptor(this.className, this.methodName, this.methodArguments, this.methodReturn)
+    this.encloseDescriptor = getDescriptor(this.methodName, this.methodArguments, this.methodReturn)
   }
 
   @Override
@@ -44,7 +43,7 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
     super.visitCode()
     count++
     addTimedAnnotation()
-    addTimeStateCodeBlock(className, methodName, methodDesc, null, true, false)
+    addTimeStateCodeBlock(methodName, methodDesc, null, true, false)
   }
 
   @Override
@@ -61,19 +60,18 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
     if (isPro) {
       count++
       addTimedAnnotation()
-      addTimeStateCodeBlock(owner.replace("/", '.'), name, desc, null, true, false)
+      addTimeStateCodeBlock(name, desc, null, true, false)
     }
     super.visitMethodInsn(opcode, owner, name, desc, itf)
     if (isPro) {
-      addTimeStateCodeBlock(owner.replace("/", '.'), name, desc, null, false, true)
+      addTimeStateCodeBlock(name, desc, null, false, true)
     }
   }
 
   @Override
   void visitInsn(int opcode) {
     if (opcode == ATHROW || opcode >= IRETURN && opcode <= RETURN) {
-      addTimeStateCodeBlock(className, methodName, methodDesc,
-          String.valueOf(methodEntryLineNumber), false, true)
+      addTimeStateCodeBlock(methodName, methodDesc, String.valueOf(methodEntryLineNumber), false, true)
       addTimeStateLogBlock()
     }
     super.visitInsn(opcode)
@@ -87,9 +85,9 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
     }
   }
 
-  private void addTimeStateCodeBlock(String owner, String name, String desc, String lineNumber,
+  private void addTimeStateCodeBlock(String name, String desc, String lineNumber,
       boolean enter, boolean exit) {
-    String methodDescriptor = getDescriptor(owner, name, getArguments(desc), getReturnType(desc))
+    String methodDescriptor = getDescriptor(name, getLastPart(getArguments(desc)), getLastPart(getReturnType(desc)))
     if (methodDescriptor == encloseDescriptor) {
       mv.visitInsn(ICONST_1)
     } else {
@@ -114,6 +112,7 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
   }
 
   private void addTimeStateLogBlock() {
+    mv.visitLdcInsn(className)
     mv.visitMethodInsn(INVOKESTATIC,
         Constants.timeStateLoggerOwner,
         Constants.timeStateLoggerLogMethodName,
@@ -143,9 +142,12 @@ class TimeStateMethodAdapter extends MethodVisitor implements Opcodes {
     }
   }
 
-  private static String getDescriptor(String owner, String name, String arguments,
-      String returnType) {
-    return "${owner}/${name}/${arguments}/$returnType"
+  private static String getDescriptor(String name, String arguments, String returnType) {
+    return "$name/$arguments/$returnType"
+  }
+
+  private static String getLastPart(String string, String symbol = ".") {
+    return string.substring(string.lastIndexOf(symbol) + 1)
   }
 
   void setPreCheckMethodVisitor(PreCheckMethodVisitor preCheckMethodVisitor) {

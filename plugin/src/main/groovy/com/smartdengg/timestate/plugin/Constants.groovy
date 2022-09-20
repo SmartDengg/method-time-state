@@ -18,7 +18,7 @@ class Constants {
   // void exit(boolean isEnclosing, String descriptor, String lineNumber)
   static final String timeStateLoggerExitMethodDesc = "(ZLjava/lang/String;Ljava/lang/String;)V"
   // void log()
-  static final String timeStateLoggerLogMethodDesc = "()V"
+  static final String timeStateLoggerLogMethodDesc = "(Ljava/lang/String;)V"
 
   //  @TimeState
   static final String timeStateDesc = "Lcom/smartdengg/timestate/runtime/TimeState;"

@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     }).start();
 
     callThrowException();
+
+    staticMethod();
   }
 
   @TimeStatePro void callRecursive() {
@@ -118,8 +120,9 @@ public class MainActivity extends AppCompatActivity {
   private void empty() {
   }
 
-  @TimeStatePro // not log
-  private int get() {
-    return 1;
+  @TimeStatePro
+  private static String staticMethod() {
+    System.out.println("staticMethod");
+    return "A";
   }
 }
