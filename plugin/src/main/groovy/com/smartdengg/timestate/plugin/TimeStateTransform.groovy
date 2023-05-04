@@ -55,7 +55,7 @@ class TimeStateTransform extends Transform {
 
     ForkJoinExecutor executor = ForkJoinExecutor.instance
 
-    TimeStateSetting setting = project.extensions["${TimeStateSetting.NAME}"]
+    TimeStateSetting setting = project.extensions["${TimeStateSetting.NAME}"] as TimeStateSetting
     TimeStateTransform.tag = setting.tag
     TimeStateTransform.emoji = setting.emoji
 

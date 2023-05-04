@@ -1,6 +1,7 @@
 package com.smartdengg.timestate.sample;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.smartdengg.timestate.runtime.TimeStatePro;
@@ -17,7 +18,9 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     for (int i = 0, n = 20; i < n; i++) {
-      TextView textView = new TextView(this);
+      TextView textView0 = new TextView(this);
+      ImageView imageView = new ImageView(this);
+      TextView textView1 = new TextView(this);
     }
 
     callIn100Millis("1", "2", "3");

@@ -1,5 +1,7 @@
 package com.smartdengg.timestate.plugin
 
+import org.objectweb.asm.AnnotationVisitor
+import org.objectweb.asm.Handle
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.tree.*
@@ -25,8 +27,7 @@ class PreCheckMethodVisitor extends MethodVisitor {
   @Override
   void visitEnd() {
     super.visitEnd()
-    if (hasAnyTimeStateAnnotation(methodNode.invisibleAnnotations)
-        && hasInvoke(methodNode.instructions)) {
+    if (hasAnyTimeStateAnnotation(methodNode.visibleAnnotations) && hasInvoke(methodNode.instructions)) {
       methodNode.accept(timeStateMethodAdapter)
     } else {
       methodNode.accept(originMethodVisitor)
